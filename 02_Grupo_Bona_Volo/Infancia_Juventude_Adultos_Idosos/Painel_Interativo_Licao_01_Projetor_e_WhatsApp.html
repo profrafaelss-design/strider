@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bona Volo — Painel Virtual da Lição 1 (Projetor & Celular)</title>
+  <style>
+    :root {
+      --green-dark: #1b5e20;
+      --green-main: #2e7d32;
+      --green-light: #e8f5e9;
+      --gold: #f9a825;
+      --gold-light: #fffde7;
+      --blue-soft: #e3f2fd;
+      --text: #1f2937;
+      --card-bg: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      overflow: hidden;
+      border: 3px solid var(--green-main);
+    }
+    header {
+      background: linear-gradient(135deg, var(--green-dark), var(--green-main));
+      color: white;
+      padding: 22px 24px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    header p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+    .badge-bar {
+      background: var(--gold-light);
+      border-bottom: 2px solid #fbc02d;
+      padding: 10px 16px;
+      text-align: center;
+      font-weight: 600;
+      color: #5d4037;
+      font-size: 0.98rem;
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: #f3f4f6;
+      border-bottom: 2px solid #d1d5db;
+    }
+    @media (max-width: 680px) {
+      .tabs { grid-template-columns: repeat(2, 1fr); }
+    }
+    .tab-btn {
+      padding: 14px 10px;
+      border: none;
+      background: transparent;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #4b5563;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 4px solid transparent;
+    }
+    .tab-btn:hover { background: #e5e7eb; }
+    .tab-btn.active {
+      background: white;
+      color: var(--green-dark);
+      border-bottom: 4px solid var(--green-main);
+    }
+    .tab-content {
+      display: none;
+      padding: 24px;
+    }
+    .tab-content.active { display: block; }
+    .section-box {
+      background: var(--green-light);
+      border-left: 6px solid var(--green-main);
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .section-box.fraternal {
+      background: #fff8e1;
+      border-left-color: var(--gold);
+    }
+    .section-box h2 {
+      font-size: 1.35rem;
+      color: var(--green-dark);
+      margin-bottom: 8px;
+    }
+    .section-box.fraternal h2 { color: #b26a00; }
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .flip-card {
+      background: white;
+      border: 2px solid #a5d6a7;
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+    .flip-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 14px rgba(46,125,50,0.15);
+    }
+    .flip-card .eo {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--green-dark);
+    }
+    .flip-card .pron {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+    .flip-card .pt {
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #c8e6c9;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #d97706;
+      display: none;
+    }
+    .flip-card.revealed .pt { display: block; }
+    .flip-card.revealed {
+      background: #fffbeb;
+      border-color: #f59e0b;
+    }
+    .paper-task {
+      background: var(--blue-soft);
+      border: 2px dashed #1e88e5;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 18px;
+    }
+    .paper-task h3 {
+      color: #0d47a1;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    .quiz-item {
+      background: white;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 1.15rem;
+    }
+    .reveal-btn {
+      background: var(--green-main);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .reveal-btn.shown {
+      background: #d97706;
+    }
+    .island-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .island-box {
+      background: white;
+      border: 2px solid #ffe082;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⭐ Grupo Bona Volo — Mês 1 (Lição 1) ⭐</h1>
+      <p>DEE — Associação Espírita Obreiros da Fraternidade (Cruz das Almas – BA)</p>
+    </header>
+    <div class="badge-bar">
+      📝 MODO SEM IMPRESSORA: Olhe na tela/projetor, escreva ou desenhe à mão no seu papel/caderno e clique nos cartões para conferir!
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab(0)">🌟 Encontro 1<br><small>Confraternização</small></button>
+      <button class="tab-btn" onclick="openTab(1)">🔍 Encontro 2<br><small>Lição 1 (Parte A)</small></button>
+      <button class="tab-btn" onclick="openTab(2)">💬 Encontro 3<br><small>Lição 1 (Parte B)</small></button>
+      <button class="tab-btn" onclick="openTab(3)">🏆 Encontro 4<br><small>Missão Ekzercaro 1</small></button>
+    </div>
+
+    <!-- ENCONTRO 1 -->
+    <div class="tab-content active">
+      <div class="section-box">
+        <h2>👋 1. Saudação Alegre do Grupo</h2>
+        <p style="font-size:1.2rem; margin-top:8px;">
+          <strong>Saluton!</strong> <em>(Sa-LÚ-ton)</em> = Olá! &nbsp;|&nbsp;
+          <strong>Paco kaj Bona Volo!</strong> <em>(Pá-tso cai Bô-na Vô-lo)</em> = Paz e Boa Vontade!
+        </p>
+      </div>
+
+      <div class="section-box">
+        <h2>✨ 2. Degustação Leve: 8 Palavras Que Você Já Sabe! (Clique para revelar)</h2>
+        <p>Tente adivinhar com o grupo antes de clicar no cartão:</p>
+        <div class="word-grid">
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">FAMILIO</div><div class="pron">leia: fa-mi-LÍ-o</div><div class="pt">👨‍👩‍👧‍👦 Família</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">AMIKO</div><div class="pron">leia: a-MÍ-ko</div><div class="pt">🤝 Amigo</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">NATURO</div><div class="pron">leia: na-TÚ-ro</div><div class="pt">🌿 Natureza</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">OCEANO</div><div class="pron">leia: o-tse-Â-no</div><div class="pt">🌊 Oceano</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">KONTINENTO</div><div class="pron">leia: kon-ti-NÊN-to</div><div class="pt">🌍 Continente</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">KAFO</div><div class="pron">leia: KÁ-fo</div><div class="pt">☕ Café</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">GRANDA</div><div class="pron">leia: GRÂN-da</div><div class="pt">🐘 Grande</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">BELA</div><div class="pron">leia: BÉ-la</div><div class="pt">🌸 Belo / Bela</div>
+          </div>
+        </div>
+        <div class="paper-task">
+          <h3>✏️ Na frente da sua folha de papel (5 min):</h3>
+          <p style="font-size:1.1rem;">Escolha <strong>3 palavras</strong> acima que você mais gostou, escreva à mão na sua folha e faça um pequeno desenho ao lado de cada uma!</p>
+        </div>
+      </div>
+
+      <div class="section-box fraternal">
+        <h2>💛 3. Grande Dinâmica de Confraternização do Mês: "A Ilha da Boa Vontade" (28 min)</h2>
+        <p style="font-size:1.1rem; margin-bottom:10px;">
+          No <strong>verso da sua folha de papel</strong>, desenhe uma grande Ilha (ou um grande Coração dividido em 4 partes) e escreva ou desenhe:
+        </p>
+        <div class="island-grid">
+          <div class="island-box">📍 <strong>1. Um Lugar Feliz:</strong><br>Um lugar onde você viveu uma memória muito boa.</div>
+          <div class="island-box">🍲 <strong>2. Sabor de Família:</strong><br>Uma comida ou bebida que lembra carinho de casa.</div>
+          <div class="island-box">🎵 <strong>3. Alegria do Coração:</strong><br>Uma brincadeira, música ou atividade que faz você sorrir.</div>
+          <div class="island-box">🌟 <strong>4. Meu Desejo (Bona Volo):</strong><br>Um sentimento bom que desejo para o nosso grupo!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENCONTRO 2 -->
+    <div class="tab-content">
+      <div class="section-box">
+        <h2>🔑 Encontro 2 — As 4 Palavras de Lugar + O Segredo de "MAL-"</h2>
+        <p>Clique nos cartões para conferir o significado:</p>
+        <div class="word-grid">
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">URBO</div><div class="pron">leia: ÚR-bo</div><div class="pt">🏙️ Cidade</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">ĈEFURBO</div><div class="pron">leia: tchê-FÚR-bo</div><div class="pt">🏛️ Capital (Cidade-chefe)</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">LANDO</div><div class="pron">leia: LÂN-do</div><div class="pt">🇧🇷 País</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">INSULO</div><div class="pron">leia: in-SÚ-lo</div><div class="pt">🏝️ Ilha</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">ESTAS</div><div class="pron">leia: ÉS-tas</div><div class="pt">⚡ É / Está / São / Estão</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">MALGRANDA</div><div class="pron">pronuncie o L: mal-GRÂN-da</div><div class="pt">🐜 Pequeno / Pequena</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paper-task">
+        <h3>📝 Desafio no Caderno (Escreva à mão apenas os números de 1 a 5 e a resposta!):</h3>
+        <p style="margin-bottom:12px;">Use as palavras: <code>urbo</code> • <code>ĉefurbo</code> • <code>lando</code> • <code>insulo</code> • <code>malgranda</code></p>
+
+        <div class="quiz-item">
+          <span><strong>1.</strong> Cruz das Almas estas bela ___________.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'urbo')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>2.</strong> Brazilo estas granda ___________.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'lando')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>3.</strong> Parizo estas granda urbo, Rejkjaviko estas ___________ urbo.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'malgranda')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>4.</strong> Parizo estas la ___________ de Francio, kaj Salvadoro estas la ___________ de Bahio.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'ĉefurbo')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>5.</strong> Itaparika estas ___________, kaj Islando ankaŭ estas ___________.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'insulo')">Ver Resposta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENCONTRO 3 -->
+    <div class="tab-content">
+      <div class="section-box">
+        <h2>🔢 Encontro 3 — Números (1 a 8), Plural (-J) e os 3 Detetives!</h2>
+        <div class="word-grid">
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">1 UNU • 2 DU</div><div class="pron">ú-nu • du</div><div class="pt">Um • Dois</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">3 TRI • 4 KVAR</div><div class="pron">tri • cvar</div><div class="pt">Três • Quatro</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">5 KVIN • 6 SES</div><div class="pron">cvin • sés</div><div class="pt">Cinco • Seis</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">7 SEP • 8 OK</div><div class="pron">sép • ôc</div><div class="pt">Sete • Oito</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">KIO?</div><div class="pron">leia: QUÍ-o</div><div class="pt">🔎 O QUE? (coisa/categoria)</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">KIE?</div><div class="pron">leia: QUÍ-e</div><div class="pt">📍 ONDE? (lugar)</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">KIU?</div><div class="pron">leia: QUÍ-u</div><div class="pt">👤 QUAL / QUEM? (nome/pessoa)</div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('revealed')">
+            <div class="eo">LOĜAS</div><div class="pron">leia: LÔ-djas</div><div class="pt">🏡 Mora / Habita</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paper-task">
+        <h3>🛂 Meu Passaporte Escrito à Mão no Caderno:</h3>
+        <p style="font-size:1.1rem; line-height:1.8;">
+          Copie e responda na sua folha:<br>
+          <strong>1. Kiu estas via nomo?</strong> &rarr; <em>Mia nomo estas __________________.</em><br>
+          <strong>2. Kie vi loĝas?</strong> &rarr; <em>Mi loĝas en Cruz das Almas.</em><br>
+          <strong>3. Kie loĝas la familio Hansen?</strong> &rarr; <em>Ĝi loĝas en Kopenhago.</em><br>
+          <strong>4. Kio estas Ameriko kaj Eŭropo?</strong> &rarr; <em>Ili estas kontinentoj.</em>
+        </p>
+      </div>
+    </div>
+
+    <!-- ENCONTRO 4 -->
+    <div class="tab-content">
+      <div class="section-box">
+        <h2>🏆 Encontro 4 — Missão Cooperativa: Ekzercaro 1</h2>
+        <p>Em equipe! Escrevam no caderno apenas o número da questão e a palavra que falta. Depois cliquem para revelar:</p>
+      </div>
+
+      <div class="paper-task">
+        <h3>🌍 Parte A — Pri la Teksto (Banco: kontinento • kontinentoj • estas • lando • landoj • malgranda • ĉefurbo • inter)</h3>
+        <div class="quiz-item">
+          <span><strong>1.</strong> Afriko estas ______________.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'kontinento')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>2.</strong> Ameriko kaj Eŭropo estas ______________.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'kontinentoj')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>3.</strong> Ankaŭ Azio kaj Aŭstralio ______________ kontinentoj.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'estas')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>4.</strong> Belgio estas ______________.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'lando')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>5.</strong> Belgio kaj Svisio estas ______________.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'landoj')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>6.</strong> Parizo estas granda urbo, Rejkjaviko estas ______________ urbo.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'malgranda')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>7.</strong> Londono estas la ______________ de Anglio.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'ĉefurbo')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>8.</strong> ______________ Afriko kaj Eŭropo estas Mediteraneo.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'Inter')">Ver Resposta</button>
+        </div>
+      </div>
+
+      <div class="paper-task" style="margin-top:20px;">
+        <h3>🕵️‍♂️ Parte B — Qual Detetive entra aqui? (Escreva no caderno: KIO, KIE ou KIU)</h3>
+        <div class="quiz-item">
+          <span><strong>1.</strong> _______ estas Afriko? — Ĝi estas kontinento.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'Kio')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>2.</strong> _______ estas Helsinki? — Ĝi estas urbo.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'Kio')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>3.</strong> _______ estas Brazilo? — Ĝi estas granda lando.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'Kio')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>4.</strong> _______ estas la nomo de la granda insulo en Norda Eŭropo? — Islando.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'Kiu')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>5.</strong> _______ estas la urbo Rejkjaviko? — Ĝi estas en Islando.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'Kie')">Ver Resposta</button>
+        </div>
+        <div class="quiz-item">
+          <span><strong>6.</strong> _______ en Eŭropo estas Bulgario? — Ĝi estas en Suda Eŭropo.</span>
+          <button class="reveal-btn" onclick="showAns(this, 'Kie')">Ver Resposta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openTab(index) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+      tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+      contents.forEach((c, i) => c.classList.toggle('active', i === index));
+    }
+    function showAns(btn, answer) {
+      if (btn.classList.contains('shown')) {
+        btn.textContent = 'Ver Resposta';
+        btn.classList.remove('shown');
+      } else {
+        btn.textContent = '✅ ' + answer;
+        btn.classList.add('shown');
+      }
+    }
+  </script>
+</body>
+</html>
