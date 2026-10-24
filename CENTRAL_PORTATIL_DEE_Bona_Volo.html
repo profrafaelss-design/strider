@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal Web — DEE & Grupo Bona Volo (1º Trimestre: Meses 1, 2 e 3)</title>
+  <title>Portal Web — DEE & Grupo Bona Volo (Esperanto e Espiritismo)</title>
   <style>
     :root {
       --green-dark: #14532d;
@@ -14,7 +14,9 @@
       --blue-dark: #1e3a8a;
       --blue-main: #2563eb;
       --blue-light: #eff6ff;
-      --purple-light: #faf5ff;
+      --spirit-bg: #f5f3ff;
+      --spirit-border: #7c3aed;
+      --spirit-dark: #4c1d95;
       --text: #1f2937;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,7 +24,7 @@
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: #f1f5f9;
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
     }
     .top-header {
       background: linear-gradient(135deg, #14532d 0%, #15803d 100%);
@@ -32,7 +34,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
     .top-header h1 { font-size: 1.6rem; margin-bottom: 4px; }
-    .top-header p { font-size: 0.95rem; opacity: 0.92; }
+    .top-header p { font-size: 0.95rem; opacity: 0.94; }
 
     /* Barra Superior de Seleção de Mês / Tela Inicial */
     .month-bar {
@@ -57,26 +59,10 @@
       transition: all 0.15s;
     }
     .month-pill:hover { background: #334155; color: white; }
-    .month-pill.active-home {
-      background: #f59e0b;
-      color: #0f172a;
-      border-color: #fbbf24;
-    }
-    .month-pill.active-m1 {
-      background: #16a34a;
-      color: white;
-      border-color: #4ade80;
-    }
-    .month-pill.active-m2 {
-      background: #2563eb;
-      color: white;
-      border-color: #60a5fa;
-    }
-    .month-pill.active-m3 {
-      background: #d97706;
-      color: white;
-      border-color: #fcd34d;
-    }
+    .month-pill.active-home { background: #f59e0b; color: #0f172a; border-color: #fbbf24; }
+    .month-pill.active-m1 { background: #16a34a; color: white; border-color: #4ade80; }
+    .month-pill.active-m2 { background: #2563eb; color: white; border-color: #60a5fa; }
+    .month-pill.active-m3 { background: #d97706; color: white; border-color: #fcd34d; }
 
     /* Barra de 4 Abas do Mês Ativo */
     .main-nav {
@@ -111,7 +97,7 @@
     }
 
     .container {
-      max-width: 1040px;
+      max-width: 1050px;
       margin: 20px auto;
       padding: 0 16px 48px;
     }
@@ -129,7 +115,18 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.05);
     }
     .hero-banner h2 { color: var(--green-dark); font-size: 1.5rem; margin-bottom: 8px; }
-    .hero-banner p { color: #475569; font-size: 1.05rem; max-width: 780px; margin: 0 auto; }
+    .hero-banner p { color: #475569; font-size: 1.05rem; max-width: 820px; margin: 0 auto; }
+    .shortlink-pill {
+      display: inline-block;
+      margin-top: 12px;
+      background: var(--gold-light);
+      border: 2px solid #f59e0b;
+      color: #92400e;
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 1rem;
+    }
 
     .month-cards-grid {
       display: grid;
@@ -161,8 +158,8 @@
     }
     .month-card.m2 .month-badge { background: var(--blue-light); color: var(--blue-dark); }
     .month-card.m3 .month-badge { background: var(--gold-light); color: #92400e; }
-    .month-card h3 { font-size: 1.3rem; color: #0f172a; margin-bottom: 8px; }
-    .month-card p { font-size: 0.96rem; color: #475569; margin-bottom: 14px; }
+    .month-card h3 { font-size: 1.28rem; color: #0f172a; margin-bottom: 8px; }
+    .month-card p { font-size: 0.95rem; color: #475569; margin-bottom: 14px; }
     .meeting-shortcuts {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -174,7 +171,7 @@
       border-radius: 8px;
       border: 1px solid #cbd5e1;
       background: #f8fafc;
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: #334155;
       cursor: pointer;
@@ -222,6 +219,62 @@
       margin: 14px 0 8px;
       font-size: 1.12rem;
     }
+
+    /* Bloco Doutrinário Espírita-Esperantista */
+    .spirit-card {
+      background: var(--spirit-bg);
+      border: 2px solid #c4b5fd;
+      border-left: 7px solid var(--spirit-border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.06);
+    }
+    .spirit-card h2 {
+      color: var(--spirit-dark);
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      border-bottom: 2px solid #ddd6fe;
+      padding-bottom: 8px;
+    }
+    .spirit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .spirit-pillar {
+      background: white;
+      border: 1px solid #ddd6fe;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .spirit-pillar strong {
+      display: block;
+      color: var(--spirit-dark);
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+    .bilingual-quote {
+      background: linear-gradient(135deg, #ede9fe 0%, #fef3c7 100%);
+      border: 2px dashed #8b5cf6;
+      border-radius: 12px;
+      padding: 14px 18px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .bilingual-quote .eo-q {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--spirit-dark);
+    }
+    .bilingual-quote .pt-q {
+      font-size: 1rem;
+      color: #4b5563;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
     .sub-tabs {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -365,7 +418,7 @@
 <body>
   <header class="top-header">
     <h1>🌍 Portal Web — DEE & Grupo Bona Volo</h1>
-    <p>Associação Espírita Obreiros da Fraternidade (Cruz das Almas – BA) | 1º DEE da Bahia (FEEB / FEB)</p>
+    <p>Departamento de Esperanto e Espiritismo | Associação Espírita Obreiros da Fraternidade (Cruz das Almas – BA)</p>
   </header>
 
   <!-- BARRA FIXA DE SELEÇÃO DE MÊS / TELA INICIAL -->
@@ -391,7 +444,8 @@
     <div class="home-screen active" id="home-screen">
       <div class="hero-banner">
         <h2>🌱 1º Trimestre: "Raízes de Boa Vontade" (Encontros 01 a 12)</h2>
-        <p>Escolha abaixo em qual <strong>Mês</strong> ou <strong>Encontro</strong> o grupo <em>Bona Volo</em> está hoje para abrir automaticamente o Painel do Projetor, o Roteiro de 60 minutos e os blocos de WhatsApp!</p>
+        <p>Bem-vindos ao Portal do <strong>1º DEE da história da Bahia</strong>! Aqui cada lição do idioma neutro caminha unida ao <strong>Evangelho Segundo o Espiritismo</strong>, ao <strong>Livro dos Espíritos</strong> e às obras clássicas do movimento espírita-esperantista.</p>
+        <div class="shortlink-pill">🔗 Link Curto Permanente do Portal: <strong>is.gd/bonavolo</strong></div>
       </div>
 
       <div class="month-cards-grid">
@@ -400,7 +454,8 @@
           <div>
             <span class="month-badge">🟢 MÊS 1 • LIÇÃO 1</span>
             <h3>De Cruz das Almas para o Mundo</h3>
-            <p><strong>Foco:</strong> Acolhimento fraterno, palavras transparentes, lugares (<em>urbo, ĉefurbo, lando, insulo</em>), verbo <em>estas</em>, opostos com <em>mal-</em>, números 1–8 e perguntas <em>Kio, Kie, Kiu</em>.</p>
+            <p><strong>Língua:</strong> Palavras transparentes, lugares, <em>estas</em>, <em>mal-</em>, números 1–8 e <em>Kio, Kie, Kiu</em>.<br>
+            <strong>Espiritismo:</strong> Lei de Sociedade (<em>O Livro dos Espíritos</em>), <em>Há muitas moradas</em> (<em>Evangelho</em>) e a missão espiritual do Esperanto (<em>Esperanto como Revelação</em>).</p>
             <div class="meeting-shortcuts">
               <button class="meet-jump-btn" onclick="selectMonth(1, 0)">🌟 Enc. 1: Confraternização</button>
               <button class="meet-jump-btn" onclick="selectMonth(1, 1)">🔍 Enc. 2: Lição 1 (Parte A)</button>
@@ -416,7 +471,8 @@
           <div>
             <span class="month-badge">🔵 MÊS 2 • LIÇÃO 2</span>
             <h3>A Família Hansen, Cores e Animais</h3>
-            <p><strong>Foco:</strong> As cores da amizade, personagens da família Hansen, mascotes (<em>Pluto kaj Mimi</em>), pronomes (<em>li, ŝi, ĝi, ili</em>), frutas, perguntas com <em>Ĉu (Jes/Ne)</em> e <em>Kia?</em></p>
+            <p><strong>Língua:</strong> Cores, família Hansen, mascotes, pronomes (<em>li, ŝi, ĝi, ili</em>), frutas, <em>Ĉu (Jes/Ne)</em> e <em>Kia?</em><br>
+            <strong>Espiritismo:</strong> Igualdade perante Deus, os animais na Criação Divina, <em>Conhece-se a árvore pelo fruto</em> e a infância de Zamenhof (<em>Doutor Esperanto</em>).</p>
             <div class="meeting-shortcuts">
               <button class="meet-jump-btn" onclick="selectMonth(2, 0)">🌟 Enc. 5: Confraternização</button>
               <button class="meet-jump-btn" onclick="selectMonth(2, 1)">🔍 Enc. 6: Lição 2 (Parte A)</button>
@@ -432,7 +488,8 @@
           <div>
             <span class="month-badge">🟡 MÊS 3 • LIÇÃO 3</span>
             <h3>Laços de Família, Posse e Acusativo</h3>
-            <p><strong>Foco:</strong> Homenagem à família (Nilda, Miguel e Maria), "Genética das Palavras" (sufixo <em>-in-</em> e prefixo <em>ge-</em>), verbo <em>havas</em>, posse <em>Kies?</em> e descoberta visual do acusativo <em>-n</em>.</p>
+            <p><strong>Língua:</strong> Família, sufixo <em>-in-</em> e prefixo <em>ge-</em>, verbo <em>havas</em>, posse <em>Kies?</em> e acusativo <em>-n</em>.<br>
+            <strong>Espiritismo:</strong> <em>Honrai vosso pai e vossa mãe</em> (Cap. XIV), igualdade homem/mulher (<em>Livro dos Espíritos</em>) e os verdadeiros tesouros da alma (Cap. XVI).</p>
             <div class="meeting-shortcuts">
               <button class="meet-jump-btn" onclick="selectMonth(3, 0)">🌟 Enc. 9: Confraternização</button>
               <button class="meet-jump-btn" onclick="selectMonth(3, 1)">🔍 Enc. 10: Lição 3 (Parte A)</button>
@@ -442,6 +499,23 @@
           </div>
           <button class="open-month-btn" onclick="selectMonth(3, 0)">Abrir Mês 3 Completo &rarr;</button>
         </div>
+      </div>
+
+      <div class="card">
+        <h2>📱 Mensagem de Lançamento do Portal Web para o WhatsApp do Grupo</h2>
+        <div class="copy-box" id="home-launch-msg">🌍✨ *SALUTON, FAMÍLIA BONA VOLO!* ✨🕊️
+
+Temos uma novidade muito especial para o nosso *Departamento de Esperanto e Espiritismo (DEE)* da Associação Espírita Obreiros da Fraternidade!
+
+Agora contamos com o nosso *Portal Web Oficial do Grupo Bona Volo*, onde estão reunidos os materiais dos nossos encontros semanais — unindo o aprendizado leve do Esperanto, as lições luminosas do *Evangelho Segundo o Espiritismo*, d'*O Livro dos Espíritos* e das obras clássicas da nossa tradição espírita-esperantista (*Esperanto como Revelação*, *Doutor Esperanto* e *A Língua que Veio do Céu*), além das nossas dinâmicas fraternas!
+
+🔗 *Acesse de qualquer celular ou computador pelo nosso link curto oficial:*
+👉 *https://is.gd/bonavolo*
+
+Não precisa baixar aplicativo nem imprimir nada: basta clicar no link para acompanhar os cartões interativos de cada encontro, revisar as palavras da semana e vivenciar conosco essa grande roda familiar!
+
+*Paco kaj Bona Volo!* (Paz e Boa Vontade!) 💚🌟</div>
+        <button class="copy-btn" onclick="copyText('home-launch-msg', this)">📋 Copiar Mensagem de Lançamento do Portal</button>
       </div>
 
       <div class="card">
@@ -458,7 +532,6 @@
     <!-- WORKSPACE MÊS 1 (LIÇÃO 1 — ENCONTROS 1 A 4)               -->
     <!-- ========================================================= -->
     <div class="month-workspace" id="workspace-m1">
-      <!-- ABA 0: PROJETOR MÊS 1 -->
       <div class="view-panel active">
         <div class="sub-tabs">
           <button class="sub-btn active" onclick="switchSub(1, 0)">🌟 Encontro 1<br><small>Confraternização</small></button>
@@ -487,6 +560,28 @@
               <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BELA</div><div class="pron">BÉ-la</div><div class="pt">🌸 Belo / Bela</div></div>
             </div>
             <div class="note-banner">✏️ Na frente da folha de papel: Escolha 3 palavras acima, escreva em Esperanto e faça um pequeno desenho ao lado de cada uma!</div>
+          </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 1</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XI)</strong>
+                Amar o próximo como a si mesmo: o nascimento do grupo <em>Bona Volo</em> inspira-se no cântico espiritual anunciando a chegada de Jesus: <em>"Glória a Deus nas alturas, paz na Terra, boa vontade para com os homens!"</em>.
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 768 — Lei de Sociedade)</strong>
+                Por que Deus fez o ser humano para viver em sociedade? <em>"Deus fez o homem para viver em sociedade porque não lhe deu inutilmente a palavra e todas as outras faculdades necessárias à vida de relação."</em>
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Esperanto como Revelação (F. V. Lorenz / Emmanuel)</strong>
+                O Esperanto não nasceu por acaso: foi inspirado pelos Espíritos Superiores como um "cimento de fraternidade" para aproximar os corações e preparar a Terra Regenerada.
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Paco sur la tero al la homoj de bona volo!"</div>
+              <div class="pt-q">"Paz na Terra aos seres humanos de boa vontade!"</div>
+            </div>
           </div>
 
           <div class="card" style="background:var(--gold-light); border-color:#f59e0b;">
@@ -520,6 +615,29 @@
             <div class="quiz-item"><span><strong>4.</strong> Parizo estas la ___________ de Francio, kaj Salvadoro estas la ___________ de Bahio.</span><button class="reveal-btn" onclick="showAns(this,'ĉefurbo')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>5.</strong> Itaparika estas ___________, kaj Islando ankaŭ estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'insulo')">Ver Resposta</button></div>
           </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 2 (Granda kaj Malgranda)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XIII — O óbolo da viúva)</strong>
+                Para Jesus, uma oferta materialmente <em>malgranda</em> (pequena), como as duas moedinhas da viúva pobre ou a semente de mostarda, torna-se <em>granda</em> (imensa) quando nasce da sinceridade do coração.
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 785 — Lei de Progresso)</strong>
+                Qual é o maior obstáculo ao progresso? O orgulho e o egoísmo. A humildade nos ensina a respeitar os pequenos começos e todas as cidades e povos do mundo.
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Doutor Esperanto (A Caridade de Zamenhof)</strong>
+                Zamenhof era médico oculista dos pobres em Varsóvia: seu consultório era materialmente <em>malgranda</em>, mas seu amor fraterno era <em>granda</em> — quando o paciente não podia pagar, ele mesmo ajudava a comprar os remédios!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Malgranda gesto de amo estas granda antaŭ Dio."</div>
+              <div class="pt-q">"Um pequeno gesto de amor é grande diante de Deus."</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> Roda <em>"Pequenos Gestos, Grande Amor"</em> — cada integrante compartilha um pequeno gesto de bondade que recebeu recentemente e que iluminou seu dia.</p>
+          </div>
         </div>
 
         <!-- M1 SUB 2: ENCONTRO 3 -->
@@ -541,6 +659,29 @@
             <div class="quiz-item"><span><strong>2.</strong> Kie vi loĝas?</span><button class="reveal-btn" onclick="showAns(this,'Mi loĝas en Cruz das Almas')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>3.</strong> Kie loĝas la familio Hansen?</span><button class="reveal-btn" onclick="showAns(this,'Ĝi loĝas en Kopenhago')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>4.</strong> Kio estas Ameriko kaj Eŭropo?</span><button class="reveal-btn" onclick="showAns(this,'Ili estas kontinentoj')">Ver Resposta</button></div>
+          </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 3 (Kie ni loĝas?)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. III — Há muitas moradas)</strong>
+                Quando aprendemos o verbo <code>loĝas</code> (mora), lembramos a promessa consoladora de Jesus: <em>"Na casa de meu Pai há muitas moradas"</em> — a Terra é uma escola abençoada no infinito Universo.
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 55) & A Gênese (Cap. XVIII)</strong>
+                Todos os globos que circulam no espaço são solidários. Nós moramos temporariamente em uma cidade física, mas nossa verdadeira morada é a fraternidade universal.
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 A Língua que Veio do Céu (Homarano / Ismael Gomes Braga)</strong>
+                As mensagens espirituais relatam que nas colônias e escolas do Mundo Espiritual o Esperanto é estudado e amado como idioma de intercâmbio fraterno entre Espíritos de várias nações!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Kie estas amo, tie loĝas Dio."</div>
+              <div class="pt-q">"Onde há amor, ali mora Deus."</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> <em>"A História do Meu Nome (La Historio de Mia Nomo)"</em> — cada um conta quem escolheu seu nome e o carinho que ele carrega (Nilda conta como escolheu os nomes de Miguel e Maria!).</p>
           </div>
         </div>
 
@@ -566,6 +707,29 @@
             <div class="quiz-item"><span><strong>5.</strong> _______ estas la urbo Rejkjaviko? — Ĝi estas en Islando.</span><button class="reveal-btn" onclick="showAns(this,'Kie')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>6.</strong> _______ en Eŭropo estas Bulgario? — Ĝi estas en Suda Eŭropo.</span><button class="reveal-btn" onclick="showAns(this,'Kie')">Ver Resposta</button></div>
           </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 4 (Os 5 Continentes e a Caridade)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XV)</strong>
+                Não importa se alguém vive no norte (<code>norda</code>), sul (<code>suda</code>), leste (<code>orienta</code>) ou oeste (<code>okcidenta</code>): a bússola segura da evolução espiritual é a máxima: <em>"Fora da caridade não há salvação"</em>.
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 886 — Caridade segundo Jesus)</strong>
+                <em>"Benevolência para com todos, indulgência para as imperfeições dos outros, perdão das ofensas."</em> Essa é a ponte (<code>inter</code>) que liga todos os corações.
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Esperanto como Revelação (As 5 Pontas da Verda Stelo)</strong>
+                Por que a estrela do Esperanto tem 5 pontas e é verde? As 5 pontas representam os <strong>5 continentes tradicionais</strong> estudados na Lição 1 (<em>Afriko, Ameriko, Eŭropo, Azio, Aŭstralio</em>) unidos pela cor verde da Esperança!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Ekster la karitato ne estas savo."</div>
+              <div class="pt-q">"Fora da caridade não há salvação." (Allan Kardec)</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> Desenhar à mão uma <em>Estrela Verde de 5 Pontas (Verda Stelo)</em> escrevendo 5 qualidades luminosas para presentear um amigo do grupo pela conclusão da Lição 1!</p>
+          </div>
         </div>
       </div>
 
@@ -573,49 +737,29 @@
       <div class="view-panel">
         <div class="card">
           <h2>📋 Roteiros de 60 Minutos — Mês 1 (Encontros 01 a 04)</h2>
-          <h3>🌟 Encontro 01 (1º Encontro do Mês — Foco em Confraternização):</h3>
-          <div class="timeline-step"><strong>16h40–16h45 (5m) | Oração/Acolhimento:</strong> Recepção afetuosa a Raíza, Mariza, Miguel, Maria e Nilda. Prece inicial.</div>
-          <div class="timeline-step"><strong>16h45–16h55 (10m) | Aquecimento ("Saluton, Amiko!"):</strong> Caminhar pela sala cumprimentando ao ouvir <em>"Saluton!"</em> e fazendo coração nas mãos ao ouvir <em>"Bona Volo!"</em>.</div>
-          <div class="timeline-step"><strong>16h55–17h05 (10m) | Degustação Leve:</strong> Adivinhar os 8 cartões transparentes na tela e desenhar 3 na frente da folha.</div>
-          <div class="timeline-step fraternal"><strong>17h05–17h33 (28m) | Grande Confraternização ("A Ilha da Boa Vontade"):</strong> Reflexão breve (Lei de Sociedade - <em>O Livro dos Espíritos</em>). No verso da folha, desenhar a Ilha com 4 memórias/desejos e compartilhar em roda!</div>
-          <div class="timeline-step"><strong>17h33–17h40 (7m) | Fechamento + Oração Final:</strong> Palavra favorita do dia e prece de gratidão.</div>
-
-          <h3 style="margin-top:18px;">🔍 Encontro 02 (Lição 1 — Parte A):</h3>
-          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Gestos de pé — abrir os braços para coisas <em>GRANDA</em> e encolher para coisas <em>MALGRANDA</em>.</div>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Apresentar <em>urbo, ĉefurbo, lando, insulo, estas</em> e responder de 1 a 5 no caderno.</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Reflexão sobre o valor dos pequenos gestos (<em>malgrandaj gestoj</em>) no Evangelho e roda de partilha.</div>
-
-          <h3 style="margin-top:18px;">💬 Encontro 03 (Lição 1 — Parte B):</h3>
-          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Palmas rítmicas contando de 1 a 8 (<em>unu ĝis ok</em>).</div>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Plural em <em>-j</em>, os 3 Detetives (<em>Kio, Kie, Kiu</em>) e Passaporte escrito à mão no caderno.</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Dinâmica <em>"A História do Meu Nome (La Historio de Mia Nomo)"</em> — Nilda conta como escolheu os nomes de Miguel e Maria!</div>
-
-          <h3 style="margin-top:18px;">🏆 Encontro 04 (Missão Ekzercaro 1):</h3>
-          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Jogo da Bússola Viva (<em>Norda, Suda, Orienta, Okcidenta, Inter</em>).</div>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Quiz cooperativo do <em>Ekzercaro 1</em> em duplas/trios anotando no caderno.</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Desenhar à mão uma <em>Estrela Verde (Verda Stelo)</em> com qualidades para presentear um amigo do grupo!</div>
+          <div class="timeline-step"><strong>🌟 Encontro 01 (Confraternização):</strong> Prece (5m) &rarr; Aquecimento <em>"Saluton!"</em> (10m) &rarr; 8 Palavras Transparentes (10m) &rarr; Reflexão <em>Evangelho Cap. XI / Livro dos Espíritos Q. 768 / Esperanto como Revelação</em> + Dinâmica <em>"Ilha da Boa Vontade"</em> (28m) &rarr; Fechamento e Prece (7m).</div>
+          <div class="timeline-step"><strong>🔍 Encontro 02 (Lição 1 — Parte A):</strong> Prece (5m) &rarr; Gestos <em>Granda/Malgranda</em> (8m) &rarr; Lugares e verbo <em>estas</em> (20m) &rarr; Reflexão <em>O Óbolo da Viúva (Cap. XIII) + Consultório humilde de Zamenhof (Doutor Esperanto)</em> + Roda <em>"Pequenos Gestos, Grande Amor"</em> (18m) &rarr; Fechamento e Prece (9m).</div>
+          <div class="timeline-step"><strong>💬 Encontro 03 (Lição 1 — Parte B):</strong> Prece (5m) &rarr; Palmas de 1 a 8 (8m) &rarr; Plural <em>-j</em>, Detetives <em>Kio, Kie, Kiu</em> e Passaporte (20m) &rarr; Reflexão <em>Há Muitas Moradas (Cap. III) + O Esperanto no Mundo Espiritual (A Língua que Veio do Céu)</em> + Roda <em>"A História do Meu Nome"</em> (18m) &rarr; Fechamento e Prece (9m).</div>
+          <div class="timeline-step"><strong>🏆 Encontro 04 (Ekzercaro 1):</strong> Prece (5m) &rarr; Bússola Viva (8m) &rarr; Quiz Cooperativo <em>Ekzercaro 1</em> (20m) &rarr; Reflexão <em>Ekster la karitato ne estas savo (Cap. XV) + O simbolismo das 5 pontas da Verda Stelo</em> + Entrega da Estrela Verde (18m) &rarr; Fechamento e Prece (9m).</div>
         </div>
       </div>
 
       <!-- ABA 2: WHATSAPP MÊS 1 -->
       <div class="view-panel">
         <div class="card">
-          <h2>📱 Blocos de WhatsApp — Mês 1 (Clique para Copiar)</h2>
-          <h3>Encontro 1 (Confraternização):</h3>
-          <div class="copy-box" id="m1-w1">💚 *GRUPO BONA VOLO — ENCONTRO 1 (CONFRATERNIZAÇÃO!)*
-👋 *Saluton!* = Olá! | 🕊️ *Paco kaj Bona Volo!* = Paz e Boa Vontade!
-✨ *8 Palavras de hoje:* 1. *familio* | 2. *amiko* | 3. *naturo* | 4. *oceano* | 5. *kontinento* | 6. *kafo* | 7. *granda* | 8. *bela*
-📝 *No papel:* Desenhe 3 palavras na frente da folha e, no verso, a sua *Ilha da Boa Vontade*!</div>
-          <button class="copy-btn" onclick="copyText('m1-w1', this)">📋 Copiar Encontro 1</button>
+          <h2>📱 Blocos de WhatsApp — Mês 1 (Língua + Espiritismo)</h2>
+          <div class="copy-box" id="m1-w1">🌍🕊️ *GRUPO BONA VOLO — MÊS 1 (LIÇÃO 1: UM MUNDO, UMA FAMÍLIA)*
+🔗 *Nosso Portal Web:* https://is.gd/bonavolo
 
-          <h3 style="margin-top:16px;">Encontros 2, 3 e 4 (Resumo de Estudo da Lição 1):</h3>
-          <div class="copy-box" id="m1-w2">🌍 *RESUMO DA LIÇÃO 1 — GRUPO BONA VOLO*
-🔑 *Lugares:* *urbo* (cidade), *ĉefurbo* (capital), *lando* (país), *insulo* (ilha)
-⚡ *Opostos:* *granda* (grande) ↔ *malgranda* (pequeno)
+🔑 *Palavras do Mês:* *familio, amiko, naturo, urbo, ĉefurbo, lando, insulo, kontinento, granda, malgranda, bela, estas, loĝas*
 🔢 *Números 1 a 8:* *unu, du, tri, kvar, kvin, ses, sep, ok*
 🔎 *Os 3 Detetives:* *Kio?* (O que?), *Kie?* (Onde?), *Kiu?* (Qual/Quem?)
-📺 *Vídeo da semana:* Assista à Aula 1 do Prof. Cícero Gabriel no YouTube!</div>
-          <button class="copy-btn" onclick="copyText('m1-w2', this)">📋 Copiar Resumo da Lição 1</button>
+
+📖 *Luz do Evangelho e do Espiritismo no Mês 1:*
+• *"Paco sur la tero al la homoj de bona volo!"* (Paz na Terra aos homens de boa vontade — Evangelho, Cap. XI)
+• *"Kie estas amo, tie loĝas Dio."* (Onde há amor, ali mora Deus — Evangelho, Cap. III)
+• *"Ekster la karitato ne estas savo."* (Fora da caridade não há salvação — Evangelho, Cap. XV)</div>
+          <button class="copy-btn" onclick="copyText('m1-w1', this)">📋 Copiar Resumo do Mês 1</button>
         </div>
       </div>
 
@@ -623,7 +767,7 @@
       <div class="view-panel">
         <div class="card">
           <h2>🎵 Cancioneiro & Acervo PDF</h2>
-          <p style="font-size:1.15rem; background:var(--green-light); padding:14px; border-radius:10px; margin-bottom:14px;">
+          <p style="font-size:1.15rem; background:var(--green-light); padding:14px; border-radius:10px;">
             <strong>Canção de Acolhimento:</strong><br>
             Bonan tagon, mia amiko, / Kiel fartas vi? <em>(Bô-nan tá-gon, mí-a a-mí-ko / Kí-el fár-tas vi?)</em><br>
             Paco, ĝojo, bona volo / Estas ĉiam ĉi! <em>(Pá-tso, djô-io, bô-na vô-lo / És-tas tchí-am tchi!)</em>
@@ -636,7 +780,6 @@
     <!-- WORKSPACE MÊS 2 (LIÇÃO 2 — ENCONTROS 5 A 8)               -->
     <!-- ========================================================= -->
     <div class="month-workspace" id="workspace-m2">
-      <!-- ABA 0: PROJETOR MÊS 2 -->
       <div class="view-panel active">
         <div class="sub-tabs">
           <button class="sub-btn active" onclick="switchSub(2, 0)">🌟 Encontro 5<br><small>Confraternização</small></button>
@@ -663,9 +806,31 @@
             <div class="note-banner">✏️ Na frente da folha: Desenhe uma Estrela Verde (<em>Verda Stelo</em>) e escreva suas 3 cores favoritas em Esperanto!</div>
           </div>
 
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 5 (A Diversidade e a Paz)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. VI — O Cristo Consolador)</strong>
+                O Evangelho ilumina o coração humano com as cores da esperança imortal (<code>verda</code>), da serenidade celeste (<code>blua</code>) e do amor fraterno (<code>ruĝa</code>).
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 803 — Lei de Igualdade)</strong>
+                Perante Deus, todos os seres humanos são iguais: as diferentes culturas, origens e "cores" são vestimentas variadas para o mesmo Espírito imortal aprender a amar sem preconceitos.
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Doutor Esperanto (O Sonho do Menino Lázaro em Białystok)</strong>
+                Quando tinha a idade de Miguel e Maria (10–11 anos), o menino Zamenhof via 4 grupos diferentes brigarem nas ruas de sua cidade e prometeu a Deus criar uma ponte para que todas as "cores" humanas vivessem como irmãos!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Antaŭ Dio, ĉiuj homoj brilas per la koloro de la amo."</div>
+              <div class="pt-q">"Diante de Deus, todos os seres humanos brilham pela cor do amor."</div>
+            </div>
+          </div>
+
           <div class="card" style="background:var(--gold-light); border-color:#f59e0b;">
             <h2>💛 Grande Dinâmica de Confraternização (28 min): "O Arco-Íris do Nosso Coração"</h2>
-            <p style="font-size:1.1rem; margin-bottom:10px;">No <strong>verso da folha</strong>, usando lápis de cor ou canetas, crie 4 círculos coloridos e compartilhe na roda (com Nilda, Miguel, Maria, Mariza, Raíza e Rafael):</p>
+            <p style="font-size:1.1rem; margin-bottom:10px;">No <strong>verso da folha</strong>, crie 4 círculos coloridos e compartilhe na roda (Nilda, Miguel, Maria, Mariza, Raíza e Rafael):</p>
             <ul style="margin-left:20px; font-size:1.08rem; line-height:1.8;">
               <li>💚 <strong>VERDA (Verde — Esperança):</strong> Um sonho ou esperança bonita que trago no coração.</li>
               <li>💛 <strong>FLAVA (Amarelo — Alegria):</strong> Algo que me fez sorrir nesta semana.</li>
@@ -695,6 +860,29 @@
             <div class="quiz-item"><span><strong>5.</strong> Pluto kaj Mimi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'bestoj')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>6.</strong> Kio estas Karlo? _____ estas knabo. Kio estas Vera? _____ estas knabino.</span><button class="reveal-btn" onclick="showAns(this,'Li / Ŝi')">Ver Resposta</button></div>
           </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 6 (Os Animais na Criação Divina)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XVII — Sede Perfeitos)</strong>
+                O homem de bem respeita todas as criaturas de Deus, exercendo a brandura e o cuidado amoroso tanto com o próximo quanto com a natureza e os animais.
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questões 597 a 604 — Os Animais)</strong>
+                Os animais (<code>bestoj</code>), como o cão Pluto (<code>hundo</code>) e a gata Mimi (<code>kato</code>), possuem um princípio inteligente em evolução, sentem afeto e são nossos irmãos menores sob o olhar paternal de Deus!
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 A Língua que Veio do Céu & Doutor Esperanto</strong>
+                No Movimento Esperantista e Espírita, o respeito aos animais e à vida sempre caminhou junto com o ideal da fraternidade universal (<em>Interna Ideo</em>).
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"La bestoj estas niaj malgrandaj gefratoj en la Kreitaro de Dio."</div>
+              <div class="pt-q">"Os animais são nossos irmãozinhos na Criação de Deus."</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> Roda <em>"Nossos Amigos de Quatro Patas"</em> — Miguel, Maria, Nilda, Mariza, Raíza e Rafael contam histórias de um bichinho de estimação querido.</p>
+          </div>
         </div>
 
         <!-- M2 SUB 2: ENCONTRO 7 -->
@@ -716,6 +904,29 @@
             <div class="quiz-item"><span><strong>4.</strong> Kia estas la banano? — Ĝi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'flava')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>5.</strong> Kia estas la Esperanto-stelo? — Ĝi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'verda')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>6.</strong> Kia estas la ĉokolado? — Ĝi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'bruna')">Ver Resposta</button></div>
+          </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 7 (Conhece-se a Árvore pelo Fruto)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XXI)</strong>
+                Aprendemos hoje a palavra <code>frukto</code> (fruta/fruto). Jesus nos ensina que <em>"conhece-se a árvore pelo seu fruto"</em>: nossos pensamentos de paz e gestos de bondade são os doces frutos da nossa alma!
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 919 — Santo Agostinho)</strong>
+                Como usamos a partícula <code>Ĉu...?</code> para perguntar, Santo Agostinho nos convida a perguntar todas as noites à nossa consciência: <em>"Ĉu mi faris la bonon hodiaŭ?"</em> (Fiz o bem hoje?).
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Esperanto sem Mestre (O Exemplo de Francisco Valdomiro Lorenz)</strong>
+                Lorenz viveu no Brasil até os 84 anos servindo gratuitamente como professor, médium e tradutor: diante de todo convite para ajudar o próximo, sua resposta era sempre um alegre <strong>"Jes!"</strong> (Sim!).
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Laŭ la frukto oni konas la arbon."</div>
+              <div class="pt-q">"Pelo fruto se conhece a árvore." (Evangelho de Jesus)</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> Partilha de uma fruta ou pedacinho de chocolate (<code>frukto kaj ĉokolado</code>) celebrando os "bons frutos" que cada um colheu na semana.</p>
           </div>
         </div>
 
@@ -739,6 +950,29 @@
             <div class="quiz-item"><span><strong>3.</strong> Kia estas la Esperanto-stelo? _____ estas verda.</span><button class="reveal-btn" onclick="showAns(this,'Ĝi')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>4.</strong> Kio estas Pluto kaj Mimi? _____ estas bestoj.</span><button class="reveal-btn" onclick="showAns(this,'Ili')">Ver Resposta</button></div>
           </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 8 (Kia estas nia koro?)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. VIII — Bem-aventurados os puros de coração)</strong>
+                Quando aprendemos a perguntar <code>Kia estas...?</code> (Como é...?), Jesus nos convida a cultivar um coração puro, simples e sincero como o das crianças!
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Céu e o Inferno (1ª Parte, Cap. III — O Céu)</strong>
+                O Céu não é um lugar fechado nas nuvens (sub o <code>blua ĉielo</code>), mas a alegria íntima da consciência que ama e coopera com o bem.
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Esperanto como Revelação (Alegria no Estudo Fraterno)</strong>
+                Segundo os Amigos Espirituais, quando adultos e crianças estudam juntos o idioma da fraternidade com alegria, a sala se enche de luz espiritual e bons fluidos!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Feliĉaj estas la puraj je koro, ĉar ili vidos Dion."</div>
+              <div class="pt-q">"Bem-aventurados os puros de coração, porque verão a Deus." (Mateus, 5:8)</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> <em>"Cartão Colorido de Gratidão"</em> — cada integrante faz à mão um cartão usando a cor favorita de um amigo do grupo para celebrar o fim do Mês 2!</p>
+          </div>
         </div>
       </div>
 
@@ -746,38 +980,28 @@
       <div class="view-panel">
         <div class="card">
           <h2>📋 Roteiros de 60 Minutos — Mês 2 (Encontros 05 a 08 — Lição 2)</h2>
-          <h3>🌟 Encontro 05 (1º Encontro do Mês 2 — Confraternização das Cores):</h3>
-          <div class="timeline-step"><strong>16h40–16h45 (5m) | Oração/Acolhimento:</strong> Boas-vindas ao Mês 2 e prece inicial.</div>
-          <div class="timeline-step"><strong>16h45–16h55 (10m) | Aquecimento ("Toque na Cor!"):</strong> Rafael ou Raíza dizem uma cor em Esperanto (<em>verda, blua, flava, ruĝa, blanka</em>) e Miguel, Maria e os adultos tocam em algum objeto/roupa daquela cor na sala!</div>
-          <div class="timeline-step"><strong>16h55–17h05 (10m) | Degustação Leve:</strong> Adivinhar os 8 cartões de cores na tela e pintar/escrever 3 cores na frente da folha.</div>
-          <div class="timeline-step fraternal"><strong>17h05–17h33 (28m) | Grande Confraternização ("O Arco-Íris do Nosso Coração"):</strong> Reflexão sobre <em>Doutor Esperanto</em> (como Zamenhof via beleza na diversidade humana). No verso da folha, cada integrante (incluindo Nilda) associa 4 cores a 4 sentimentos/pessoas queridas e compartilha em roda!</div>
-
-          <h3 style="margin-top:18px;">🔍 Encontro 06 (Lição 2 — Parte A: Família Hansen e Mascotes):</h3>
-          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Mímica rápida de animais e personagens (<em>hundo, kato, elefanto, knabo, knabino</em>).</div>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Apresentar a Família Hansen na tela, pronomes <em>li, ŝi, ĝi, ili</em> e responder de 1 a 6 no caderno.</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Roda afetiva sobre nossos bichinhos de estimação (<em>hundoj kaj katoj</em>) e o amor aos animais na visão espírita.</div>
-
-          <h3 style="margin-top:18px;">💬 Encontro 07 (Lição 2 — Parte B: Frutas, "Ĉu" e "Kia"):</h3>
-          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Jogo do "Verdadeiro ou Absurdo" com Miguel e Maria: <em>"Ĉu la banano estas blua?" — "Ne, ĝi estas flava!"</em>.</div>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Perguntas com <em>Ĉu</em> e <em>Kia</em> + exercício de 1 a 6 no caderno.</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Partilha de uma fruta ou pedacinho de chocolate (<em>frukto kaj ĉokolado</em>) agradecendo pelas dádivas da natureza.</div>
-
-          <h3 style="margin-top:18px;">🏆 Encontro 08 (Missão Ekzercaro 2):</h3>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Quiz cooperativo do <em>Ekzercaro 2</em> (Partes A e B na tela + caderno).</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> <em>"Cartão Colorido de Gratidão"</em> — criar à mão um cartão com a cor favorita de um amigo do grupo!</div>
+          <div class="timeline-step"><strong>🌟 Encontro 05 (Confraternização):</strong> Prece (5m) &rarr; Toque na Cor (10m) &rarr; 8 Cores no Projetor (10m) &rarr; Reflexão <em>Evangelho Cap. VI / Livro dos Espíritos Q. 803 / Infância de Zamenhof em Doutor Esperanto</em> + Dinâmica <em>"O Arco-Íris do Nosso Coração"</em> (28m) &rarr; Fechamento e Prece (7m).</div>
+          <div class="timeline-step"><strong>🔍 Encontro 06 (Lição 2 — Parte A):</strong> Prece (5m) &rarr; Mímica de Animais e Personagens (8m) &rarr; Família Hansen e Pronomes <em>li, ŝi, ĝi, ili</em> (20m) &rarr; Reflexão <em>Os Animais na Visão Espírita (Livro dos Espíritos Q. 597–604)</em> + Roda <em>"Nossos Amigos de Quatro Patas"</em> (18m) &rarr; Fechamento e Prece (9m).</div>
+          <div class="timeline-step"><strong>💬 Encontro 07 (Lição 2 — Parte B):</strong> Prece (5m) &rarr; Jogo Verdadeiro ou Absurdo com <em>Ĉu</em> (8m) &rarr; Frutas, <em>Ĉu (Jes/Ne)</em> e <em>Kia?</em> (20m) &rarr; Reflexão <em>Conhece-se a Árvore pelo Fruto (Evangelho Cap. XXI) + O "Jes!" de F. V. Lorenz</em> + Partilha de Fruta/Chocolate (18m) &rarr; Fechamento e Prece (9m).</div>
+          <div class="timeline-step"><strong>🏆 Encontro 08 (Ekzercaro 2):</strong> Prece (5m) &rarr; Revisão Relâmpago (8m) &rarr; Quiz Cooperativo <em>Ekzercaro 2</em> (20m) &rarr; Reflexão <em>Bem-aventurados os Puros de Coração (Cap. VIII) e O Céu no Coração (O Céu e o Inferno)</em> + Entrega do Cartão Colorido (18m) &rarr; Fechamento e Prece (9m).</div>
         </div>
       </div>
 
       <!-- ABA 2: WHATSAPP MÊS 2 -->
       <div class="view-panel">
         <div class="card">
-          <h2>📱 Blocos de WhatsApp — Mês 2 (Lição 2)</h2>
-          <div class="copy-box" id="m2-w1">🌈 *GRUPO BONA VOLO — MÊS 2 (LIÇÃO 2: CORES, FAMÍLIA HANSEN E ANIMAIS)*
-🎨 *Cores:* *verda* (verde), *blua* (azul), *flava* (amarelo), *ruĝa* (vermelho), *blanka* (branco), *bruna* (marrom), *nigra* (preto), *griza* (cinza)
-👨‍👩‍👧‍👦 *Pessoas e Animais:* *viro* (homem), *virino* (mulher), *knabo* (menino), *knabino* (menina), *hundo* (cão), *kato* (gato), *besto* (animal)
-🔑 *Pronomes:* *li* (ele), *ŝi* (ela), *ĝi* (ele/ela neutro), *ili* (eles/elas)
-❓ *Perguntas:* *Ĉu...?* (Sim/Não: *Jes / Ne, sed...*) | *Kia estas?* (Como é / Qual a cor?)
-📺 *Vídeo do Mês:* Aula 2 do Prof. Cícero Gabriel no YouTube!</div>
+          <h2>📱 Blocos de WhatsApp — Mês 2 (Língua + Espiritismo)</h2>
+          <div class="copy-box" id="m2-w1">🌈🕊️ *GRUPO BONA VOLO — MÊS 2 (LIÇÃO 2: CORES, FAMÍLIA HANSEN E CRIAÇÃO DIVINA)*
+🔗 *Nosso Portal Web:* https://is.gd/bonavolo
+
+🎨 *Cores:* *verda, blua, flava, ruĝa, blanka, bruna, nigra, griza*
+👨‍👩‍👧‍👦 *Pessoas e Animais:* *viro, virino, knabo, knabino, hundo (Pluto), kato (Mimi), besto, homo*
+🔑 *Pronomes e Perguntas:* *li, ŝi, ĝi, ili* | *Ĉu...? (Jes / Ne, sed...)* | *Kia estas?*
+
+📖 *Luz do Evangelho e do Espiritismo no Mês 2:*
+• *"Antaŭ Dio, ĉiuj homoj brilas per la koloro de la amo."* (Diante de Deus, todos brilham pela cor do amor — Livro dos Espíritos, Q. 803)
+• *"La bestoj estas niaj malgrandaj gefratoj."* (Os animais são nossos irmãozinhos na Criação — Livro dos Espíritos, Q. 597)
+• *"Laŭ la frukto oni konas la arbon."* (Pelo fruto se conhece a árvore — Evangelho, Cap. XXI)</div>
           <button class="copy-btn" onclick="copyText('m2-w1', this)">📋 Copiar Resumo do Mês 2</button>
         </div>
       </div>
@@ -798,7 +1022,6 @@
     <!-- WORKSPACE MÊS 3 (LIÇÃO 3 — ENCONTROS 9 A 12)              -->
     <!-- ========================================================= -->
     <div class="month-workspace" id="workspace-m3">
-      <!-- ABA 0: PROJETOR MÊS 3 -->
       <div class="view-panel active">
         <div class="sub-tabs">
           <button class="sub-btn active" onclick="switchSub(3, 0)">🌟 Encontro 9<br><small>Confraternização</small></button>
@@ -825,13 +1048,34 @@
             <div class="note-banner">✏️ Na frente da folha: Miguel e Maria escrevem uma frase especial para Nilda: <code>Nilda estas nia bela patrino!</code></div>
           </div>
 
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 9 (A Sagrada Missão da Família)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XIV — Honrai a vosso pai e a vossa mãe)</strong>
+                A família é o santuário onde os Espíritos se reencontram para aprender a ternura, a gratidão filial e o amparo mútuo. Além da família consanguínea, formamos aqui nossa família espiritual!
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 774 — Laços de Família)</strong>
+                Os laços de afeto verdadeiro entre pais, mães, filhos e irmãos jamás se apagam: eles atravessam as reencarnações como estrelas guia do coração.
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Doutor Esperanto (O Amor de Dona Rozalia e Klara Zamenhof)</strong>
+                Zamenhof sempre dizia que aprendeu o ideal da fraternidade no colo de sua mãe, <strong>Dona Rozalia</strong> (<code>sia patrino</code>), que lhe ensinou que todos os seres humanos são filhos do mesmo Pai Celestial!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Honoru viajn patron kaj patrinon."</div>
+              <div class="pt-q">"Honrai a vosso pai e a vossa mãe." (O Evangelho Segundo o Espiritismo, Cap. XIV)</div>
+            </div>
+          </div>
+
           <div class="card" style="background:var(--gold-light); border-color:#f59e0b;">
             <h2>💛 Grande Dinâmica de Confraternização (28 min): "A Árvore da Família e da Gratidão"</h2>
-            <p style="font-size:1.1rem; margin-bottom:10px;">Inspirada em <em>O Evangelho Segundo o Espiritismo</em> (Cap. XIV — <em>Honrai a vosso pai e a vossa mãe</em>):</p>
             <ul style="margin-left:20px; font-size:1.08rem; line-height:1.8;">
               <li>🌳 <strong>1. Desenho da Árvore:</strong> No verso da folha, cada um desenha uma árvore frondosa.</li>
               <li>🍎 <strong>2. Os Frutos do Afeto:</strong> Nas raízes e nos frutos, escreve o nome das pessoas da família (e amigos espirituais) que sustentam sua caminhada.</li>
-              <li>💐 <strong>3. Homenagem Viva:</strong> Momento especial de carinho e gratidão à <strong>Nilda</strong>, à <strong>Raíza</strong>, à <strong>Mariza</strong>, ao <strong>Miguel</strong>, à <strong>Maria</strong> e ao <strong>Rafael</strong> por formarem a família <em>Bona Volo</em>!</li>
+              <li>💐 <strong>3. Homenagem Viva:</strong> Momento especial de carinho à <strong>Nilda</strong>, à <strong>Raíza</strong>, à <strong>Mariza</strong>, ao <strong>Miguel</strong>, à <strong>Maria</strong> e ao <strong>Rafael</strong> por formarem a família <em>Bona Volo</em>!</li>
             </ul>
           </div>
         </div>
@@ -856,6 +1100,29 @@
             <div class="quiz-item"><span><strong>4.</strong> Kio estas gefratoj? — _______________________.</span><button class="reveal-btn" onclick="showAns(this,'Frato kaj fratino')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>5.</strong> Miguel estas la _________ de Maria, kaj Maria estas la _________ de Miguel.</span><button class="reveal-btn" onclick="showAns(this,'frato / fratino')">Ver Resposta</button></div>
           </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 10 (União e Igualdade Espiritual)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XXII)</strong>
+                O prefixo <code>ge-</code> do Esperanto (<code>gepatroj, gefratoj, gefiloj</code>) une o masculino e o feminino em uma só palavra de comunhão, refletindo a harmonia que deve reinar no lar.
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questões 817 a 822 — Igualdade do Homem e da Mulher)</strong>
+                Os homens e as mulheres são iguais perante Deus? <em>"Sim; Deus não deu a uns mais do que a outros, pois o Espírito progride em ambas as condições."</em>
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 A Língua que Veio do Céu (Ciência e Espiritualidade)</strong>
+                Assim como na Genética (área da querida Profª Mariza!) pequenas bases formam toda a riqueza da vida, no Esperanto pequenos afixos formam uma língua perfeita para unir Ciência, Filosofia e Religião!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Ni ĉiuj estas gefiloj de Dio kaj gefratoj inter ni."</div>
+              <div class="pt-q">"Todos nós somos filhos e filhas de Deus e irmãos e irmãs entre nós."</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> Roda <em>"O Código Genético da Nossa Amizade"</em> — reconhecer o dom especial que cada integrante traz para o grupo <em>Bona Volo</em>.</p>
+          </div>
         </div>
 
         <!-- M3 SUB 2: ENCONTRO 11 -->
@@ -877,6 +1144,29 @@
             <div class="quiz-item"><span><strong>4.</strong> Karlo havas besto___. Li ne havas kato___, sed hundo___.</span><button class="reveal-btn" onclick="showAns(this,'beston / katon / hundon')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>5.</strong> Ĉu Vera havas fratino___? — Jes, ŝi havas fratinon (Lisa).</span><button class="reveal-btn" onclick="showAns(this,'fratinon')">Ver Resposta</button></div>
           </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 11 (O Que Realmente Possuímos?)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XVI — A Verdadeira Propriedade)</strong>
+                Hoje aprendemos <code>havas</code> (tem) e <code>Kies?</code> (De quem é?). O Evangelho ensina que os bens materiais pertencem a Deus e nos são emprestados; nossos verdadeiros tesouros são a sabedoria, a bondade e o amor!
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ O Livro dos Espíritos (Questão 808) & O Céu e o Inferno</strong>
+                O Espírito só leva consigo para a vida espiritual aquilo que cultivou no coração: cada gesto de amor, cada estudo e cada amizade sincera.
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Esperanto como Revelação (A Lição Moral do Acusativo "-N")</strong>
+                Na gramática do Esperanto, a letra <code>-n</code> mostra para onde vai a nossa ação (ex.: <em>ami la frato<strong>n</strong></em> — amar o irmão). No Espiritismo, todo sentimento bom precisa transformar-se em ação direcionada ao bem do próximo!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Kiu havas amon en la koro, tiu havas la veran trezoron."</div>
+              <div class="pt-q">"Quem tem amor no coração, possui o verdadeiro tesouro."</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> Roda <em>"Meus Tesouros do Coração (Kion mi havas en la koro)"</em> — partilhar uma conquista interior ou amizade que não tem preço material.</p>
+          </div>
         </div>
 
         <!-- M3 SUB 3: ENCONTRO 12 -->
@@ -896,6 +1186,29 @@
             <div class="quiz-item"><span><strong>3.</strong> _____ filo estas Karlo? — Li estas la filo de ges-roj Hansen.</span><button class="reveal-btn" onclick="showAns(this,'Kies')">Ver Resposta</button></div>
             <div class="quiz-item"><span><strong>4.</strong> _____ fratino estas Vera? — Ŝi estas la fratino de Lisa.</span><button class="reveal-btn" onclick="showAns(this,'Kies')">Ver Resposta</button></div>
           </div>
+
+          <div class="spirit-card">
+            <h2>🕊️ Luz do Espiritismo & Esperanto — Encontro 12 (A Alegria da Perseverança)</h2>
+            <div class="spirit-grid">
+              <div class="spirit-pillar">
+                <strong>📖 O Evangelho Segundo o Espiritismo (Cap. XX — Os Trabalhadores do Senhor)</strong>
+                Concluir juntos o 1º Trimestre (12 encontros de amizade e estudo!) mostra como a perseverança suave e amorosa vence qualquer obstáculo.
+              </div>
+              <div class="spirit-pillar">
+                <strong>⚖️ A Gênese (Cap. XVIII — Os Sinais dos Tempos e a Nova Geração)</strong>
+                Ver crianças (Miguel e Maria) e adultos estudando lado a lado na Casa Espírita é um retrato vivo da Terra Regenerada anunciada por Allan Kardec!
+              </div>
+              <div class="spirit-pillar">
+                <strong>🌟 Esperanto como Revelação (Sementeira Pioneira na Bahia)</strong>
+                Como <strong>1º DEE da história da Bahia</strong>, cada passo do grupo <em>Bona Volo</em> em Cruz das Almas é amparado pelos Benfeitores Espirituais da Unificação!
+              </div>
+            </div>
+            <div class="bilingual-quote">
+              <div class="eo-q">"Ni semas en paco kaj rikoltas en frateco!"</div>
+              <div class="pt-q">"Semeamos em paz e colhemos em fraternidade!"</div>
+            </div>
+            <p style="margin-top:12px; font-weight:600; color:var(--spirit-dark);">🤝 <strong>Atividade Fraternal (18 min):</strong> Festa de Colheita do 1º Trimestre — abraço coletivo de parabéns entre todos os 6 integrantes e combinação do nosso <em>1º Piquenique na Natureza (Pikniko de Bona Volo)</em>!</p>
+          </div>
         </div>
       </div>
 
@@ -903,35 +1216,28 @@
       <div class="view-panel">
         <div class="card">
           <h2>📋 Roteiros de 60 Minutos — Mês 3 (Encontros 09 a 12 — Lição 3)</h2>
-          <h3>🌟 Encontro 09 (1º Encontro do Mês 3 — Confraternização da Família):</h3>
-          <div class="timeline-step"><strong>Aquecimento (10m):</strong> Roda de afeto apresentando os laços presentes na própria sala: Rafael kaj Raíza, Nilda, Miguel kaj Maria (<em>gefratoj</em>), Mariza!</div>
-          <div class="timeline-step"><strong>Degustação Leve (10m):</strong> Os 8 cartões da Família na tela + homenagem escrita à Nilda (<em>"Nilda estas nia bela patrino!"</em>).</div>
-          <div class="timeline-step fraternal"><strong>Grande Confraternização (28m):</strong> Reflexão sobre o Cap. XIV de <em>O Evangelho Segundo o Espiritismo</em> + Desenho da <em>Árvore da Família e da Gratidão</em> no verso da folha.</div>
-
-          <h3 style="margin-top:18px;">🔍 Encontro 10 (Lição 3 — Parte A: Genética das Palavras `-in-` e `ge-`):</h3>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Como o Esperanto forma femininos (<em>-in-</em>) e grupos mistos (<em>ge-</em>). Resolução das 5 fórmulas no caderno com apoio da Profª Mariza e das crianças!</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Dinâmica sobre a igualdade e complementaridade entre homens, mulheres, crianças e idosos na criação divina (<em>O Livro dos Espíritos</em>, Q. 817–822).</div>
-
-          <h3 style="margin-top:18px;">💬 Encontro 11 (Lição 3 — Parte B: `Havas`, `Kies` e o Acusativo `-n`):</h3>
-          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Jogo da "Sacola Misteriosa" — tirar um objeto/desenho e dizer: <em>"Mi havas krajonon / libron / pomon!"</em>.</div>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Entender <em>Kies</em> (de quem) e a medalhinha <em>-n</em> após o verbo <em>havas</em>.</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Reflexão sobre "Ter vs. Ser": o que nós realmente possuímos na alma que levamos para a eternidade (<em>O Evangelho Segundo o Espiritismo</em>, Cap. XVI).</div>
-
-          <h3 style="margin-top:18px;">🏆 Encontro 12 (Missão Ekzercaro 3 & Festa do 1º Trimestre!):</h3>
-          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Resolução cooperativa do <em>Ekzercaro 3</em>.</div>
-          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Celebração das 3 primeiras lições concluídas (12 encontros de vitória!) e combinação do nosso <em>1º Piquenique na Natureza (Pikniko de Bona Volo)</em>!</div>
+          <div class="timeline-step"><strong>🌟 Encontro 09 (Confraternização):</strong> Prece (5m) &rarr; Roda dos Laços Reais na Sala (10m) &rarr; 8 Palavras de Família + Frase para Nilda (10m) &rarr; Reflexão <em>Honrai vosso pai e vossa mãe (Evangelho Cap. XIV) + Dona Rozalia Zamenhof (Doutor Esperanto)</em> + Desenho da <em>Árvore da Família</em> (28m) &rarr; Fechamento e Prece (7m).</div>
+          <div class="timeline-step"><strong>🔍 Encontro 10 (Lição 3 — Parte A):</strong> Prece (5m) &rarr; Pareamento rápido (8m) &rarr; Genética das Palavras <em>-in-</em> e <em>ge-</em> (20m) &rarr; Reflexão <em>Igualdade do Homem e da Mulher (Livro dos Espíritos Q. 817–822) + Ciência e Espiritualidade</em> + Roda dos Dons do Grupo (18m) &rarr; Fechamento e Prece (9m).</div>
+          <div class="timeline-step"><strong>💬 Encontro 11 (Lição 3 — Parte B):</strong> Prece (5m) &rarr; Jogo <em>"Kion vi havas?"</em> (8m) &rarr; Verbo <em>havas</em>, <em>Kies?</em> e o Acusativo <em>-n</em> (20m) &rarr; Reflexão <em>A Verdadeira Propriedade (Evangelho Cap. XVI) + O sentido moral do Acusativo (Esperanto como Revelação)</em> + Roda dos Tesouros da Alma (18m) &rarr; Fechamento e Prece (9m).</div>
+          <div class="timeline-step"><strong>🏆 Encontro 12 (Ekzercaro 3 & Festa):</strong> Prece (5m) &rarr; Revisão dos 5 Detetives (8m) &rarr; Quiz Cooperativo <em>Ekzercaro 3</em> (20m) &rarr; Reflexão <em>Os Trabalhadores do Senhor (Cap. XX) e A Gênese (Cap. XVIII)</em> + Celebração do 1º Trimestre (18m) &rarr; Fechamento e Prece (9m).</div>
         </div>
       </div>
 
       <!-- ABA 2: WHATSAPP MÊS 3 -->
       <div class="view-panel">
         <div class="card">
-          <h2>📱 Blocos de WhatsApp — Mês 3 (Lição 3)</h2>
-          <div class="copy-box" id="m3-w1">👨‍👩‍👧‍👦 *GRUPO BONA VOLO — MÊS 3 (LIÇÃO 3: FAMÍLIA, POSSE E ACUSATIVO)*
-💛 *Família:* *patro* (pai), *patrino* (mãe), *frato* (irmão), *fratino* (irmã), *filo* (filho), *filino* (filha), *infanoj* (crianças)
-🧬 *Prefixo GE- (União):* *gepatroj* (pais), *gefratoj* (irmãos), *geknaboj* (meninos e meninas), *gefiloj* (filhos e filhas)
-🔑 *Novas Chaves:* *havas* (tem), *Kies?* (De quem?), e a terminação *-N* para o que possuímos (*Karlo havas hundon!*)
-📺 *Vídeo do Mês:* Aula 3 do Prof. Cícero Gabriel no YouTube!</div>
+          <h2>📱 Blocos de WhatsApp — Mês 3 (Língua + Espiritismo)</h2>
+          <div class="copy-box" id="m3-w1">👨‍👩‍👧‍👦🕊️ *GRUPO BONA VOLO — MÊS 3 (LIÇÃO 3: FAMÍLIA, POSSE E TESOUROS DA ALMA)*
+🔗 *Nosso Portal Web:* https://is.gd/bonavolo
+
+💛 *Família:* *patro, patrino, frato, fratino, filo, filino, infanoj*
+🧬 *Prefixo GE- (União):* *gepatroj, gefratoj, geknaboj, gefiloj, gesinjoroj*
+🔑 *Novas Chaves:* *havas* (tem), *Kies?* (De quem?), e a terminação *-N* (*Karlo havas hundon!*)
+
+📖 *Luz do Evangelho e do Espiritismo no Mês 3:*
+• *"Honoru viajn patron kaj patrinon."* (Honrai vosso pai e vossa mãe — Evangelho, Cap. XIV)
+• *"Ni ĉiuj estas gefiloj de Dio kaj gefratoj inter ni."* (Somos todos filhos de Deus e irmãos entre nós — Livro dos Espíritos, Q. 817)
+• *"Kiu havas amon en la koro, tiu havas la veran trezoron."* (Quem tem amor no coração, possui o verdadeiro tesouro — Evangelho, Cap. XVI)</div>
           <button class="copy-btn" onclick="copyText('m3-w1', this)">📋 Copiar Resumo do Mês 3</button>
         </div>
       </div>
@@ -950,7 +1256,7 @@
   </div>
 
   <script>
-    let currentMonth = 0; // 0 = Home, 1 = M1, 2 = M2, 3 = M3
+    let currentMonth = 0;
 
     function goHome() {
       currentMonth = 0;
