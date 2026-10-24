@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Central Portátil — DEE & Grupo Bona Volo (Mês 1 / Lição 1)</title>
+  <title>Portal Web — DEE & Grupo Bona Volo (1º Trimestre: Meses 1, 2 e 3)</title>
   <style>
     :root {
       --green-dark: #14532d;
@@ -11,7 +11,10 @@
       --green-light: #f0fdf4;
       --gold: #d97706;
       --gold-light: #fffbeb;
+      --blue-dark: #1e3a8a;
+      --blue-main: #2563eb;
       --blue-light: #eff6ff;
+      --purple-light: #faf5ff;
       --text: #1f2937;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,14 +27,60 @@
     .top-header {
       background: linear-gradient(135deg, #14532d 0%, #15803d 100%);
       color: white;
-      padding: 20px 24px;
+      padding: 18px 20px;
       text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.12);
     }
-    .top-header h1 { font-size: 1.65rem; margin-bottom: 4px; }
-    .top-header p { font-size: 0.98rem; opacity: 0.92; }
-    .main-nav {
+    .top-header h1 { font-size: 1.6rem; margin-bottom: 4px; }
+    .top-header p { font-size: 0.95rem; opacity: 0.92; }
+
+    /* Barra Superior de Seleção de Mês / Tela Inicial */
+    .month-bar {
+      background: #0f172a;
+      color: white;
+      padding: 10px 16px;
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .month-pill {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 2px solid #334155;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .month-pill:hover { background: #334155; color: white; }
+    .month-pill.active-home {
+      background: #f59e0b;
+      color: #0f172a;
+      border-color: #fbbf24;
+    }
+    .month-pill.active-m1 {
+      background: #16a34a;
+      color: white;
+      border-color: #4ade80;
+    }
+    .month-pill.active-m2 {
+      background: #2563eb;
+      color: white;
+      border-color: #60a5fa;
+    }
+    .month-pill.active-m3 {
+      background: #d97706;
+      color: white;
+      border-color: #fcd34d;
+    }
+
+    /* Barra de 4 Abas do Mês Ativo */
+    .main-nav {
+      display: none;
       flex-wrap: wrap;
       justify-content: center;
       gap: 8px;
@@ -42,6 +91,7 @@
       top: 0;
       z-index: 50;
     }
+    .main-nav.visible { display: flex; }
     .nav-btn {
       padding: 10px 16px;
       border-radius: 10px;
@@ -59,13 +109,99 @@
       color: white;
       border-color: var(--green-dark);
     }
+
     .container {
-      max-width: 1020px;
+      max-width: 1040px;
       margin: 20px auto;
-      padding: 0 16px 40px;
+      padding: 0 16px 48px;
     }
+
+    /* Tela Inicial (Home) */
+    .home-screen { display: none; }
+    .home-screen.active { display: block; }
+    .hero-banner {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      text-align: center;
+      border: 2px solid #bbf7d0;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+    .hero-banner h2 { color: var(--green-dark); font-size: 1.5rem; margin-bottom: 8px; }
+    .hero-banner p { color: #475569; font-size: 1.05rem; max-width: 780px; margin: 0 auto; }
+
+    .month-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .month-card {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      border-top: 8px solid var(--green-main);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .month-card.m2 { border-top-color: var(--blue-main); }
+    .month-card.m3 { border-top-color: var(--gold); }
+    .month-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      background: var(--green-light);
+      color: var(--green-dark);
+    }
+    .month-card.m2 .month-badge { background: var(--blue-light); color: var(--blue-dark); }
+    .month-card.m3 .month-badge { background: var(--gold-light); color: #92400e; }
+    .month-card h3 { font-size: 1.3rem; color: #0f172a; margin-bottom: 8px; }
+    .month-card p { font-size: 0.96rem; color: #475569; margin-bottom: 14px; }
+    .meeting-shortcuts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .meet-jump-btn {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .meet-jump-btn:hover { background: #dcfce7; border-color: #86efac; color: var(--green-dark); }
+    .open-month-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: var(--green-main);
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .month-card.m2 .open-month-btn { background: var(--blue-main); }
+    .month-card.m3 .open-month-btn { background: var(--gold); }
+
+    /* Painéis de Mês */
+    .month-workspace { display: none; }
+    .month-workspace.active { display: block; }
     .view-panel { display: none; }
     .view-panel.active { display: block; }
+
     .card {
       background: white;
       border-radius: 16px;
@@ -112,6 +248,7 @@
     }
     .sub-view { display: none; }
     .sub-view.active { display: block; }
+
     .word-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
@@ -129,7 +266,7 @@
       transition: transform 0.15s;
     }
     .flip-card:hover { transform: translateY(-2px); }
-    .flip-card .eo { font-size: 1.4rem; font-weight: 800; color: var(--green-dark); }
+    .flip-card .eo { font-size: 1.38rem; font-weight: 800; color: var(--green-dark); }
     .flip-card .pron { font-size: 0.88rem; color: #64748b; margin-top: 4px; }
     .flip-card .pt {
       display: none;
@@ -138,10 +275,11 @@
       border-top: 1px dashed #86efac;
       font-weight: 700;
       color: var(--gold);
-      font-size: 1.15rem;
+      font-size: 1.12rem;
     }
     .flip-card.revealed { background: var(--gold-light); border-color: #f59e0b; }
     .flip-card.revealed .pt { display: block; }
+
     .quiz-item {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
@@ -153,7 +291,7 @@
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
     }
     .reveal-btn {
       background: var(--green-main);
@@ -165,12 +303,13 @@
       cursor: pointer;
     }
     .reveal-btn.shown { background: var(--gold); }
+
     .timeline-step {
       background: #f8fafc;
       border-left: 5px solid var(--green-main);
       padding: 12px 16px;
       border-radius: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .timeline-step.fraternal {
       background: var(--gold-light);
@@ -183,7 +322,7 @@
       padding: 14px;
       white-space: pre-wrap;
       font-family: inherit;
-      font-size: 0.96rem;
+      font-size: 0.95rem;
       margin-top: 8px;
     }
     .copy-btn {
@@ -196,214 +335,678 @@
       cursor: pointer;
       margin-top: 8px;
     }
+    .doc-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .doc-link {
+      display: block;
+      padding: 14px;
+      background: var(--green-light);
+      border: 1px solid #86efac;
+      border-radius: 12px;
+      color: var(--green-dark);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .doc-link:hover { background: #dcfce7; }
+    .note-banner {
+      background: var(--blue-light);
+      border-left: 5px solid var(--blue-main);
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
   <header class="top-header">
-    <h1>🌍 Central Portátil — DEE & Grupo Bona Volo</h1>
-    <p>Associação Espírita Obreiros da Fraternidade (Cruz das Almas – BA) | Funciona 100% em qualquer navegador!</p>
+    <h1>🌍 Portal Web — DEE & Grupo Bona Volo</h1>
+    <p>Associação Espírita Obreiros da Fraternidade (Cruz das Almas – BA) | 1º DEE da Bahia (FEEB / FEB)</p>
   </header>
 
-  <nav class="main-nav">
-    <button class="nav-btn active" onclick="switchMain(0)">🖥️ 1. Painel do Projetor (Aulas 1 a 4)</button>
-    <button class="nav-btn" onclick="switchMain(1)">📋 2. Roteiro do Facilitador (60 min)</button>
-    <button class="nav-btn" onclick="switchMain(2)">📱 3. Mensagens p/ Copiar no WhatsApp</button>
-    <button class="nav-btn" onclick="switchMain(3)">🎵 4. Cancioneiro & Mural</button>
+  <!-- BARRA FIXA DE SELEÇÃO DE MÊS / TELA INICIAL -->
+  <div class="month-bar">
+    <button class="month-pill active-home" id="pill-home" onclick="goHome()">🏠 Tela Inicial (Onde Estamos?)</button>
+    <button class="month-pill" id="pill-m1" onclick="selectMonth(1, 0)">🟢 Mês 1: Lição 1 (Encontros 1–4)</button>
+    <button class="month-pill" id="pill-m2" onclick="selectMonth(2, 0)">🔵 Mês 2: Lição 2 (Encontros 5–8)</button>
+    <button class="month-pill" id="pill-m3" onclick="selectMonth(3, 0)">🟡 Mês 3: Lição 3 (Encontros 9–12)</button>
+  </div>
+
+  <!-- BARRA DE ABAS DO MÊS SELECIONADO -->
+  <nav class="main-nav" id="month-main-nav">
+    <button class="nav-btn active" onclick="switchMainTab(0)" id="nav-tab-0">🖥️ 1. Painel do Projetor</button>
+    <button class="nav-btn" onclick="switchMainTab(1)" id="nav-tab-1">📋 2. Roteiro do Facilitador (60 min)</button>
+    <button class="nav-btn" onclick="switchMainTab(2)" id="nav-tab-2">📱 3. Copiar p/ WhatsApp</button>
+    <button class="nav-btn" onclick="switchMainTab(3)" id="nav-tab-3">🎵 4. Cancioneiro & Acervo PDF</button>
   </nav>
 
   <div class="container">
-    <!-- ABA 1: PAINEL DO PROJETOR -->
-    <div class="view-panel active">
-      <div class="sub-tabs">
-        <button class="sub-btn active" onclick="switchSub(0)">🌟 Encontro 1<br><small>Confraternização</small></button>
-        <button class="sub-btn" onclick="switchSub(1)">🔍 Encontro 2<br><small>Lição 1 (Parte A)</small></button>
-        <button class="sub-btn" onclick="switchSub(2)">💬 Encontro 3<br><small>Lição 1 (Parte B)</small></button>
-        <button class="sub-btn" onclick="switchSub(3)">🏆 Encontro 4<br><small>Missão Ekzercaro 1</small></button>
+    <!-- ========================================================= -->
+    <!-- TELA INICIAL (ONDE ESTAMOS?)                              -->
+    <!-- ========================================================= -->
+    <div class="home-screen active" id="home-screen">
+      <div class="hero-banner">
+        <h2>🌱 1º Trimestre: "Raízes de Boa Vontade" (Encontros 01 a 12)</h2>
+        <p>Escolha abaixo em qual <strong>Mês</strong> ou <strong>Encontro</strong> o grupo <em>Bona Volo</em> está hoje para abrir automaticamente o Painel do Projetor, o Roteiro de 60 minutos e os blocos de WhatsApp!</p>
       </div>
 
-      <!-- SUB 0: ENCONTRO 1 -->
-      <div class="sub-view active">
-        <div class="card">
-          <h2>👋 Encontro 1 do Mês — Foco em Confraternização & Despertar Suave</h2>
-          <p style="font-size:1.15rem; margin-bottom:12px;">
-            <strong>Saudação do Grupo:</strong> <code>Saluton!</code> <em>(Sa-LÚ-ton = Olá!)</em> &nbsp;|&nbsp;
-            <code>Paco kaj Bona Volo!</code> <em>(Pá-tso cai Bô-na Vô-lo = Paz e Boa Vontade!)</em>
-          </p>
-          <h3>✨ Degustação Leve (10 min): Clique nos 8 cartões para revelar o significado!</h3>
-          <div class="word-grid">
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">FAMILIO</div><div class="pron">fa-mi-LÍ-o</div><div class="pt">👨‍👩‍👧‍👦 Família</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">AMIKO</div><div class="pron">a-MÍ-ko</div><div class="pt">🤝 Amigo</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">NATURO</div><div class="pron">na-TÚ-ro</div><div class="pt">🌿 Natureza</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">OCEANO</div><div class="pron">o-tse-Â-no</div><div class="pt">🌊 Oceano</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KONTINENTO</div><div class="pron">kon-ti-NÊN-to</div><div class="pt">🌍 Continente</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KAFO</div><div class="pron">KÁ-fo</div><div class="pt">☕ Café</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GRANDA</div><div class="pron">GRÂN-da</div><div class="pt">🐘 Grande</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BELA</div><div class="pron">BÉ-la</div><div class="pt">🌸 Belo / Bela</div></div>
+      <div class="month-cards-grid">
+        <!-- CARD MÊS 1 -->
+        <div class="month-card m1">
+          <div>
+            <span class="month-badge">🟢 MÊS 1 • LIÇÃO 1</span>
+            <h3>De Cruz das Almas para o Mundo</h3>
+            <p><strong>Foco:</strong> Acolhimento fraterno, palavras transparentes, lugares (<em>urbo, ĉefurbo, lando, insulo</em>), verbo <em>estas</em>, opostos com <em>mal-</em>, números 1–8 e perguntas <em>Kio, Kie, Kiu</em>.</p>
+            <div class="meeting-shortcuts">
+              <button class="meet-jump-btn" onclick="selectMonth(1, 0)">🌟 Enc. 1: Confraternização</button>
+              <button class="meet-jump-btn" onclick="selectMonth(1, 1)">🔍 Enc. 2: Lição 1 (Parte A)</button>
+              <button class="meet-jump-btn" onclick="selectMonth(1, 2)">💬 Enc. 3: Lição 1 (Parte B)</button>
+              <button class="meet-jump-btn" onclick="selectMonth(1, 3)">🏆 Enc. 4: Ekzercaro 1</button>
+            </div>
           </div>
-          <p style="background:var(--blue-light); padding:12px; border-radius:10px; font-weight:600;">
-            ✏️ <strong>Na frente da folha de papel:</strong> Escolha 3 palavras acima, escreva em Esperanto e faça um pequeno desenho ao lado de cada uma!
-          </p>
+          <button class="open-month-btn" onclick="selectMonth(1, 0)">Abrir Mês 1 Completo &rarr;</button>
         </div>
 
-        <div class="card" style="background:var(--gold-light); border-color:#f59e0b;">
-          <h2>💛 Grande Dinâmica de Confraternização (28 min): "A Ilha da Boa Vontade"</h2>
-          <p style="font-size:1.1rem; margin-bottom:10px;">No <strong>verso da sua folha de papel</strong>, desenhe uma grande Ilha (ou Coração dividido em 4 partes) e coloque:</p>
-          <ul style="margin-left:20px; font-size:1.08rem; line-height:1.8;">
-            <li>📍 <strong>1. Um Lugar Feliz:</strong> Onde você viveu uma memória muito boa.</li>
-            <li>🍲 <strong>2. Sabor de Família:</strong> Uma comida ou bebida que lembra carinho de casa.</li>
-            <li>🎵 <strong>3. Alegria do Coração:</strong> Uma brincadeira, música ou atividade que faz você sorrir.</li>
-            <li>🌟 <strong>4. Meu Desejo (Bona Volo):</strong> Um sentimento bom que desejo para o nosso grupo!</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- SUB 1: ENCONTRO 2 -->
-      <div class="sub-view">
-        <div class="card">
-          <h2>🔍 Encontro 2 — Lugares + "ESTAS" + O Segredo de "MAL-"</h2>
-          <div class="word-grid">
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">URBO</div><div class="pron">ÚR-bo</div><div class="pt">🏙️ Cidade</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">ĈEFURBO</div><div class="pron">tchê-FÚR-bo</div><div class="pt">🏛️ Capital</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">LANDO</div><div class="pron">LÂN-do</div><div class="pt">🇧🇷 País</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">INSULO</div><div class="pron">in-SÚ-lo</div><div class="pt">🏝️ Ilha</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">ESTAS</div><div class="pron">ÉS-tas</div><div class="pt">⚡ É / Está / São</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">MALGRANDA</div><div class="pron">mal-GRÂN-da</div><div class="pt">🐜 Pequeno(a)</div></div>
+        <!-- CARD MÊS 2 -->
+        <div class="month-card m2">
+          <div>
+            <span class="month-badge">🔵 MÊS 2 • LIÇÃO 2</span>
+            <h3>A Família Hansen, Cores e Animais</h3>
+            <p><strong>Foco:</strong> As cores da amizade, personagens da família Hansen, mascotes (<em>Pluto kaj Mimi</em>), pronomes (<em>li, ŝi, ĝi, ili</em>), frutas, perguntas com <em>Ĉu (Jes/Ne)</em> e <em>Kia?</em></p>
+            <div class="meeting-shortcuts">
+              <button class="meet-jump-btn" onclick="selectMonth(2, 0)">🌟 Enc. 5: Confraternização</button>
+              <button class="meet-jump-btn" onclick="selectMonth(2, 1)">🔍 Enc. 6: Lição 2 (Parte A)</button>
+              <button class="meet-jump-btn" onclick="selectMonth(2, 2)">💬 Enc. 7: Lição 2 (Parte B)</button>
+              <button class="meet-jump-btn" onclick="selectMonth(2, 3)">🏆 Enc. 8: Ekzercaro 2</button>
+            </div>
           </div>
-          <h3>📝 Escreva no caderno apenas os números de 1 a 5 e a resposta:</h3>
-          <div class="quiz-item"><span><strong>1.</strong> Cruz das Almas estas bela ___________.</span><button class="reveal-btn" onclick="showAns(this,'urbo')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>2.</strong> Brazilo estas granda ___________.</span><button class="reveal-btn" onclick="showAns(this,'lando')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>3.</strong> Parizo estas granda urbo, Rejkjaviko estas ___________ urbo.</span><button class="reveal-btn" onclick="showAns(this,'malgranda')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>4.</strong> Parizo estas la ___________ de Francio, kaj Salvadoro estas la ___________ de Bahio.</span><button class="reveal-btn" onclick="showAns(this,'ĉefurbo')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>5.</strong> Itaparika estas ___________, kaj Islando ankaŭ estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'insulo')">Ver Resposta</button></div>
+          <button class="open-month-btn" onclick="selectMonth(2, 0)">Abrir Mês 2 Completo &rarr;</button>
         </div>
-      </div>
 
-      <!-- SUB 2: ENCONTRO 3 -->
-      <div class="sub-view">
-        <div class="card">
-          <h2>💬 Encontro 3 — Números (1 a 8), Plural (-J) e os 3 Detetives</h2>
-          <div class="word-grid">
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">1 UNU • 2 DU</div><div class="pron">ú-nu • du</div><div class="pt">1 • 2</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">3 TRI • 4 KVAR</div><div class="pron">tri • cvar</div><div class="pt">3 • 4</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">5 KVIN • 6 SES</div><div class="pron">cvin • sés</div><div class="pt">5 • 6</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">7 SEP • 8 OK</div><div class="pron">sép • ôc</div><div class="pt">7 • 8</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIO?</div><div class="pron">QUÍ-o</div><div class="pt">🔎 O QUE?</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIE?</div><div class="pron">QUÍ-e</div><div class="pt">📍 ONDE?</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIU?</div><div class="pron">QUÍ-u</div><div class="pt">👤 QUAL / QUEM?</div></div>
-            <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">LOĜAS</div><div class="pron">LÔ-djas</div><div class="pt">🏡 Mora</div></div>
+        <!-- CARD MÊS 3 -->
+        <div class="month-card m3">
+          <div>
+            <span class="month-badge">🟡 MÊS 3 • LIÇÃO 3</span>
+            <h3>Laços de Família, Posse e Acusativo</h3>
+            <p><strong>Foco:</strong> Homenagem à família (Nilda, Miguel e Maria), "Genética das Palavras" (sufixo <em>-in-</em> e prefixo <em>ge-</em>), verbo <em>havas</em>, posse <em>Kies?</em> e descoberta visual do acusativo <em>-n</em>.</p>
+            <div class="meeting-shortcuts">
+              <button class="meet-jump-btn" onclick="selectMonth(3, 0)">🌟 Enc. 9: Confraternização</button>
+              <button class="meet-jump-btn" onclick="selectMonth(3, 1)">🔍 Enc. 10: Lição 3 (Parte A)</button>
+              <button class="meet-jump-btn" onclick="selectMonth(3, 2)">💬 Enc. 11: Lição 3 (Parte B)</button>
+              <button class="meet-jump-btn" onclick="selectMonth(3, 3)">🏆 Enc. 12: Ekzercaro 3</button>
+            </div>
           </div>
-          <h3>🛂 Meu Passaporte Escrito à Mão no Caderno:</h3>
-          <p style="font-size:1.1rem; line-height:1.9; background:var(--blue-light); padding:14px; border-radius:10px;">
-            1. <strong>Kiu estas via nomo?</strong> &rarr; <em>Mia nomo estas __________________.</em><br>
-            2. <strong>Kie vi loĝas?</strong> &rarr; <em>Mi loĝas en Cruz das Almas.</em><br>
-            3. <strong>Kie loĝas la familio Hansen?</strong> &rarr; <em>Ĝi loĝas en Kopenhago.</em><br>
-            4. <strong>Kio estas Ameriko kaj Eŭropo?</strong> &rarr; <em>Ili estas kontinentoj.</em>
-          </p>
+          <button class="open-month-btn" onclick="selectMonth(3, 0)">Abrir Mês 3 Completo &rarr;</button>
         </div>
       </div>
 
-      <!-- SUB 3: ENCONTRO 4 -->
-      <div class="sub-view">
-        <div class="card">
-          <h2>🏆 Encontro 4 — Missão Cooperativa: Ekzercaro 1</h2>
-          <h3>Parte A — Pri la Teksto (Escreva no caderno de 1 a 8):</h3>
-          <div class="quiz-item"><span><strong>1.</strong> Afriko estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'kontinento')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>2.</strong> Ameriko kaj Eŭropo estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'kontinentoj')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>3.</strong> Ankaŭ Azio kaj Aŭstralio ______________ kontinentoj.</span><button class="reveal-btn" onclick="showAns(this,'estas')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>4.</strong> Belgio estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'lando')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>5.</strong> Belgio kaj Svisio estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'landoj')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>6.</strong> Parizo estas granda urbo, Rejkjaviko estas ______________ urbo.</span><button class="reveal-btn" onclick="showAns(this,'malgranda')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>7.</strong> Londono estas la ______________ de Anglio.</span><button class="reveal-btn" onclick="showAns(this,'ĉefurbo')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>8.</strong> ______________ Afriko kaj Eŭropo estas Mediteraneo.</span><button class="reveal-btn" onclick="showAns(this,'Inter')">Ver Resposta</button></div>
-
-          <h3 style="margin-top:18px;">Parte B — Qual Detetive entra aqui? (Kio, Kie ou Kiu):</h3>
-          <div class="quiz-item"><span><strong>1.</strong> _______ estas Afriko? — Ĝi estas kontinento.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>2.</strong> _______ estas Helsinki? — Ĝi estas urbo.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>3.</strong> _______ estas Brazilo? — Ĝi estas granda lando.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>4.</strong> _______ estas la nomo de la granda insulo en Norda Eŭropo? — Islando.</span><button class="reveal-btn" onclick="showAns(this,'Kiu')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>5.</strong> _______ estas la urbo Rejkjaviko? — Ĝi estas en Islando.</span><button class="reveal-btn" onclick="showAns(this,'Kie')">Ver Resposta</button></div>
-          <div class="quiz-item"><span><strong>6.</strong> _______ en Eŭropo estas Bulgario? — Ĝi estas en Suda Eŭropo.</span><button class="reveal-btn" onclick="showAns(this,'Kie')">Ver Resposta</button></div>
+      <div class="card">
+        <h2>📂 Acesso Rápido aos Documentos e PDFs do DEE</h2>
+        <div class="doc-links">
+          <a class="doc-link" href="./01_Gestao_DEE/Regulamento%20e%20Plano%20de%20Metas%20-%20Departamento%20de%20Esperanto%20e%20Espiritismo%20(2025-2026).pdf" target="_blank">📄 Regulamento e Plano de Metas DEE (PDF)</a>
+          <a class="doc-link" href="./02_Grupo_Bona_Volo/Planejamento_e_Curriculo/Cronograma%20de%20Esperanto.pdf" target="_blank">📅 Cronograma de Imersão 7 Dias (PDF)</a>
+          <a class="doc-link" href="./02_Grupo_Bona_Volo/Materiais_Didaticos/Kompleta_Naturmetodo_e_Referencias/Ekzercaro%20-%20Naturmetodo.pdf" target="_blank">📘 Ekzercaro - Naturmetodo (Prof. Cícero Gabriel)</a>
         </div>
       </div>
     </div>
 
-    <!-- ABA 2: ROTEIROS DO FACILITADOR -->
-    <div class="view-panel">
-      <div class="card">
-        <h2>🌟 Roteiro do Encontro 01 (Nosso Próximo Encontro — Foco em Confraternização!)</h2>
-        <div class="timeline-step"><strong>16h40 – 16h45 (5 min) | 1. Oração e Acolhimento:</strong> Recepção calorosa a Raíza, Mariza, Miguel, Maria e Nilda. Anunciar a regra de ouro: caminhar sem pressa, priorizando a amizade. Prece inicial.</div>
-        <div class="timeline-step"><strong>16h45 – 16h55 (10 min) | 2. Aquecimento Alegre ("Saluton, Amiko!"):</strong> Caminhar pela sala e cumprimentar de formas divertidas quando Rafael disser <em>"Saluton!"</em>; fazer coração com as mãos quando disser <em>"Bona Volo!"</em>.</div>
-        <div class="timeline-step"><strong>16h55 – 17h05 (10 min) | 3. Degustação Leve (Sem Gramática Pesada!):</strong> Adivinhar os 8 cartões na tela (<em>familio, amiko, naturo, oceano, kontinento, kafo, granda, bela</em>) e desenhar 3 deles na frente da folha de papel.</div>
-        <div class="timeline-step fraternal"><strong>17h05 – 17h33 (28 min) | 4. Grande Confraternização ("A Ilha da Boa Vontade"):</strong> Breve reflexão (3 min) sobre a Lei de Sociedade (<em>O Livro dos Espíritos</em>) e o sonho de Zamenhof. No verso da folha, cada um desenha sua Ilha com 4 memórias/desejos (lugar feliz, comida de família, alegria e desejo para o grupo) e todos compartilham em roda (incluindo Nilda!).</div>
-        <div class="timeline-step"><strong>17h33 – 17h40 (7 min) | 5. Fechamento (4m) + 6. Oração Final (3m):</strong> Cada um diz 1 palavra favorita do dia. Prece de gratidão.</div>
+    <!-- ========================================================= -->
+    <!-- WORKSPACE MÊS 1 (LIÇÃO 1 — ENCONTROS 1 A 4)               -->
+    <!-- ========================================================= -->
+    <div class="month-workspace" id="workspace-m1">
+      <!-- ABA 0: PROJETOR MÊS 1 -->
+      <div class="view-panel active">
+        <div class="sub-tabs">
+          <button class="sub-btn active" onclick="switchSub(1, 0)">🌟 Encontro 1<br><small>Confraternização</small></button>
+          <button class="sub-btn" onclick="switchSub(1, 1)">🔍 Encontro 2<br><small>Lição 1 (Parte A)</small></button>
+          <button class="sub-btn" onclick="switchSub(1, 2)">💬 Encontro 3<br><small>Lição 1 (Parte B)</small></button>
+          <button class="sub-btn" onclick="switchSub(1, 3)">🏆 Encontro 4<br><small>Missão Ekzercaro 1</small></button>
+        </div>
+
+        <!-- M1 SUB 0: ENCONTRO 1 -->
+        <div class="sub-view active">
+          <div class="card">
+            <h2>👋 Encontro 1 (Mês 1) — Confraternização & Despertar Suave</h2>
+            <p style="font-size:1.15rem; margin-bottom:12px;">
+              <strong>Saudação do Grupo:</strong> <code>Saluton!</code> <em>(Sa-LÚ-ton = Olá!)</em> &nbsp;|&nbsp;
+              <code>Paco kaj Bona Volo!</code> <em>(Pá-tso cai Bô-na Vô-lo = Paz e Boa Vontade!)</em>
+            </p>
+            <h3>✨ Degustação Leve (10 min): Clique nos 8 cartões para revelar o significado!</h3>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">FAMILIO</div><div class="pron">fa-mi-LÍ-o</div><div class="pt">👨‍👩‍👧‍👦 Família</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">AMIKO</div><div class="pron">a-MÍ-ko</div><div class="pt">🤝 Amigo</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">NATURO</div><div class="pron">na-TÚ-ro</div><div class="pt">🌿 Natureza</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">OCEANO</div><div class="pron">o-tse-Â-no</div><div class="pt">🌊 Oceano</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KONTINENTO</div><div class="pron">kon-ti-NÊN-to</div><div class="pt">🌍 Continente</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KAFO</div><div class="pron">KÁ-fo</div><div class="pt">☕ Café</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GRANDA</div><div class="pron">GRÂN-da</div><div class="pt">🐘 Grande</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BELA</div><div class="pron">BÉ-la</div><div class="pt">🌸 Belo / Bela</div></div>
+            </div>
+            <div class="note-banner">✏️ Na frente da folha de papel: Escolha 3 palavras acima, escreva em Esperanto e faça um pequeno desenho ao lado de cada uma!</div>
+          </div>
+
+          <div class="card" style="background:var(--gold-light); border-color:#f59e0b;">
+            <h2>💛 Grande Dinâmica de Confraternização (28 min): "A Ilha da Boa Vontade"</h2>
+            <p style="font-size:1.1rem; margin-bottom:10px;">No <strong>verso da folha de papel</strong>, desenhe uma grande Ilha (ou Coração dividido em 4 partes) e coloque:</p>
+            <ul style="margin-left:20px; font-size:1.08rem; line-height:1.8;">
+              <li>📍 <strong>1. Um Lugar Feliz:</strong> Onde você viveu uma memória muito boa.</li>
+              <li>🍲 <strong>2. Sabor de Família:</strong> Uma comida ou bebida que lembra carinho de casa.</li>
+              <li>🎵 <strong>3. Alegria do Coração:</strong> Uma brincadeira, música ou atividade que faz você sorrir.</li>
+              <li>🌟 <strong>4. Meu Desejo (Bona Volo):</strong> Um sentimento bom que desejo para o nosso grupo!</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- M1 SUB 1: ENCONTRO 2 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>🔍 Encontro 2 — Lugares + "ESTAS" + O Segredo de "MAL-"</h2>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">URBO</div><div class="pron">ÚR-bo</div><div class="pt">🏙️ Cidade</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">ĈEFURBO</div><div class="pron">tchê-FÚR-bo</div><div class="pt">🏛️ Capital</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">LANDO</div><div class="pron">LÂN-do</div><div class="pt">🇧🇷 País</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">INSULO</div><div class="pron">in-SÚ-lo</div><div class="pt">🏝️ Ilha</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">ESTAS</div><div class="pron">ÉS-tas</div><div class="pt">⚡ É / Está / São</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">MALGRANDA</div><div class="pron">mal-GRÂN-da</div><div class="pt">🐜 Pequeno(a)</div></div>
+            </div>
+            <h3>📝 Escreva no caderno apenas os números de 1 a 5 e a resposta:</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Cruz das Almas estas bela ___________.</span><button class="reveal-btn" onclick="showAns(this,'urbo')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> Brazilo estas granda ___________.</span><button class="reveal-btn" onclick="showAns(this,'lando')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> Parizo estas granda urbo, Rejkjaviko estas ___________ urbo.</span><button class="reveal-btn" onclick="showAns(this,'malgranda')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Parizo estas la ___________ de Francio, kaj Salvadoro estas la ___________ de Bahio.</span><button class="reveal-btn" onclick="showAns(this,'ĉefurbo')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> Itaparika estas ___________, kaj Islando ankaŭ estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'insulo')">Ver Resposta</button></div>
+          </div>
+        </div>
+
+        <!-- M1 SUB 2: ENCONTRO 3 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>💬 Encontro 3 — Números (1 a 8), Plural (-J) e os 3 Detetives</h2>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">1 UNU • 2 DU</div><div class="pron">ú-nu • du</div><div class="pt">1 • 2</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">3 TRI • 4 KVAR</div><div class="pron">tri • cvar</div><div class="pt">3 • 4</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">5 KVIN • 6 SES</div><div class="pron">cvin • sés</div><div class="pt">5 • 6</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">7 SEP • 8 OK</div><div class="pron">sép • ôc</div><div class="pt">7 • 8</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIO?</div><div class="pron">QUÍ-o</div><div class="pt">🔎 O QUE?</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIE?</div><div class="pron">QUÍ-e</div><div class="pt">📍 ONDE?</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIU?</div><div class="pron">QUÍ-u</div><div class="pt">👤 QUAL / QUEM?</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">LOĜAS</div><div class="pron">LÔ-djas</div><div class="pt">🏡 Mora</div></div>
+            </div>
+            <h3>🛂 Meu Passaporte Escrito à Mão no Caderno:</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Kiu estas via nomo?</span><button class="reveal-btn" onclick="showAns(this,'Mia nomo estas...')">Ver Modelo</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> Kie vi loĝas?</span><button class="reveal-btn" onclick="showAns(this,'Mi loĝas en Cruz das Almas')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> Kie loĝas la familio Hansen?</span><button class="reveal-btn" onclick="showAns(this,'Ĝi loĝas en Kopenhago')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Kio estas Ameriko kaj Eŭropo?</span><button class="reveal-btn" onclick="showAns(this,'Ili estas kontinentoj')">Ver Resposta</button></div>
+          </div>
+        </div>
+
+        <!-- M1 SUB 3: ENCONTRO 4 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>🏆 Encontro 4 — Missão Cooperativa: Ekzercaro 1</h2>
+            <h3>Parte A — Pri la Teksto (Escreva no caderno de 1 a 8):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Afriko estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'kontinento')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> Ameriko kaj Eŭropo estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'kontinentoj')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> Ankaŭ Azio kaj Aŭstralio ______________ kontinentoj.</span><button class="reveal-btn" onclick="showAns(this,'estas')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Belgio estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'lando')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> Belgio kaj Svisio estas ______________.</span><button class="reveal-btn" onclick="showAns(this,'landoj')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>6.</strong> Parizo estas granda urbo, Rejkjaviko estas ______________ urbo.</span><button class="reveal-btn" onclick="showAns(this,'malgranda')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>7.</strong> Londono estas la ______________ de Anglio.</span><button class="reveal-btn" onclick="showAns(this,'ĉefurbo')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>8.</strong> ______________ Afriko kaj Eŭropo estas Mediteraneo.</span><button class="reveal-btn" onclick="showAns(this,'Inter')">Ver Resposta</button></div>
+
+            <h3 style="margin-top:18px;">Parte B — Qual Detetive entra aqui? (Kio, Kie ou Kiu):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> _______ estas Afriko? — Ĝi estas kontinento.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> _______ estas Helsinki? — Ĝi estas urbo.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> _______ estas Brazilo? — Ĝi estas granda lando.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> _______ estas la nomo de la granda insulo en Norda Eŭropo? — Islando.</span><button class="reveal-btn" onclick="showAns(this,'Kiu')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> _______ estas la urbo Rejkjaviko? — Ĝi estas en Islando.</span><button class="reveal-btn" onclick="showAns(this,'Kie')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>6.</strong> _______ en Eŭropo estas Bulgario? — Ĝi estas en Suda Eŭropo.</span><button class="reveal-btn" onclick="showAns(this,'Kie')">Ver Resposta</button></div>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <h2>🔍 Resumo dos Encontros 02, 03 e 04 do Mês 1</h2>
-        <ul style="margin-left:20px; line-height:1.8;">
-          <li><strong>Encontro 02 (Parte A):</strong> Aquecimento de gestos (<em>Granda</em> vs. <em>Malgranda</em>) + 4 palavras de lugar (<em>urbo, ĉefurbo, lando, insulo</em>) e verbo <em>estas</em> + 5 frases respondidas à mão no caderno + Fraternidade: <em>"Pequenos Gestos, Grande Amor"</em>.</li>
-          <li><strong>Encontro 03 (Parte B):</strong> Palmas de 1 a 8 (<em>unu ĝis ok</em>) + Plural <em>-j</em> e os 3 Detetives (<em>Kio, Kie, Kiu</em>) + Meu Passaporte no caderno + Fraternidade: <em>"A História do Meu Nome"</em>.</li>
-          <li><strong>Encontro 04 (Missão Ekzercaro 1):</strong> Bússola Viva (<em>Norda, Suda, Orienta, Okcidenta</em>) + Quiz Cooperativo do <em>Ekzercaro 1</em> na tela/caderno + Fraternidade: Entrega da <em>Estrela Verde (Verda Stelo)</em> desenhada à mão para um amigo!</li>
-        </ul>
+      <!-- ABA 1: ROTEIRO DO FACILITADOR MÊS 1 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>📋 Roteiros de 60 Minutos — Mês 1 (Encontros 01 a 04)</h2>
+          <h3>🌟 Encontro 01 (1º Encontro do Mês — Foco em Confraternização):</h3>
+          <div class="timeline-step"><strong>16h40–16h45 (5m) | Oração/Acolhimento:</strong> Recepção afetuosa a Raíza, Mariza, Miguel, Maria e Nilda. Prece inicial.</div>
+          <div class="timeline-step"><strong>16h45–16h55 (10m) | Aquecimento ("Saluton, Amiko!"):</strong> Caminhar pela sala cumprimentando ao ouvir <em>"Saluton!"</em> e fazendo coração nas mãos ao ouvir <em>"Bona Volo!"</em>.</div>
+          <div class="timeline-step"><strong>16h55–17h05 (10m) | Degustação Leve:</strong> Adivinhar os 8 cartões transparentes na tela e desenhar 3 na frente da folha.</div>
+          <div class="timeline-step fraternal"><strong>17h05–17h33 (28m) | Grande Confraternização ("A Ilha da Boa Vontade"):</strong> Reflexão breve (Lei de Sociedade - <em>O Livro dos Espíritos</em>). No verso da folha, desenhar a Ilha com 4 memórias/desejos e compartilhar em roda!</div>
+          <div class="timeline-step"><strong>17h33–17h40 (7m) | Fechamento + Oração Final:</strong> Palavra favorita do dia e prece de gratidão.</div>
+
+          <h3 style="margin-top:18px;">🔍 Encontro 02 (Lição 1 — Parte A):</h3>
+          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Gestos de pé — abrir os braços para coisas <em>GRANDA</em> e encolher para coisas <em>MALGRANDA</em>.</div>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Apresentar <em>urbo, ĉefurbo, lando, insulo, estas</em> e responder de 1 a 5 no caderno.</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Reflexão sobre o valor dos pequenos gestos (<em>malgrandaj gestoj</em>) no Evangelho e roda de partilha.</div>
+
+          <h3 style="margin-top:18px;">💬 Encontro 03 (Lição 1 — Parte B):</h3>
+          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Palmas rítmicas contando de 1 a 8 (<em>unu ĝis ok</em>).</div>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Plural em <em>-j</em>, os 3 Detetives (<em>Kio, Kie, Kiu</em>) e Passaporte escrito à mão no caderno.</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Dinâmica <em>"A História do Meu Nome (La Historio de Mia Nomo)"</em> — Nilda conta como escolheu os nomes de Miguel e Maria!</div>
+
+          <h3 style="margin-top:18px;">🏆 Encontro 04 (Missão Ekzercaro 1):</h3>
+          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Jogo da Bússola Viva (<em>Norda, Suda, Orienta, Okcidenta, Inter</em>).</div>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Quiz cooperativo do <em>Ekzercaro 1</em> em duplas/trios anotando no caderno.</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Desenhar à mão uma <em>Estrela Verde (Verda Stelo)</em> com qualidades para presentear um amigo do grupo!</div>
+        </div>
+      </div>
+
+      <!-- ABA 2: WHATSAPP MÊS 1 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>📱 Blocos de WhatsApp — Mês 1 (Clique para Copiar)</h2>
+          <h3>Encontro 1 (Confraternização):</h3>
+          <div class="copy-box" id="m1-w1">💚 *GRUPO BONA VOLO — ENCONTRO 1 (CONFRATERNIZAÇÃO!)*
+👋 *Saluton!* = Olá! | 🕊️ *Paco kaj Bona Volo!* = Paz e Boa Vontade!
+✨ *8 Palavras de hoje:* 1. *familio* | 2. *amiko* | 3. *naturo* | 4. *oceano* | 5. *kontinento* | 6. *kafo* | 7. *granda* | 8. *bela*
+📝 *No papel:* Desenhe 3 palavras na frente da folha e, no verso, a sua *Ilha da Boa Vontade*!</div>
+          <button class="copy-btn" onclick="copyText('m1-w1', this)">📋 Copiar Encontro 1</button>
+
+          <h3 style="margin-top:16px;">Encontros 2, 3 e 4 (Resumo de Estudo da Lição 1):</h3>
+          <div class="copy-box" id="m1-w2">🌍 *RESUMO DA LIÇÃO 1 — GRUPO BONA VOLO*
+🔑 *Lugares:* *urbo* (cidade), *ĉefurbo* (capital), *lando* (país), *insulo* (ilha)
+⚡ *Opostos:* *granda* (grande) ↔ *malgranda* (pequeno)
+🔢 *Números 1 a 8:* *unu, du, tri, kvar, kvin, ses, sep, ok*
+🔎 *Os 3 Detetives:* *Kio?* (O que?), *Kie?* (Onde?), *Kiu?* (Qual/Quem?)
+📺 *Vídeo da semana:* Assista à Aula 1 do Prof. Cícero Gabriel no YouTube!</div>
+          <button class="copy-btn" onclick="copyText('m1-w2', this)">📋 Copiar Resumo da Lição 1</button>
+        </div>
+      </div>
+
+      <!-- ABA 3: CANCIONEIRO MÊS 1 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>🎵 Cancioneiro & Acervo PDF</h2>
+          <p style="font-size:1.15rem; background:var(--green-light); padding:14px; border-radius:10px; margin-bottom:14px;">
+            <strong>Canção de Acolhimento:</strong><br>
+            Bonan tagon, mia amiko, / Kiel fartas vi? <em>(Bô-nan tá-gon, mí-a a-mí-ko / Kí-el fár-tas vi?)</em><br>
+            Paco, ĝojo, bona volo / Estas ĉiam ĉi! <em>(Pá-tso, djô-io, bô-na vô-lo / És-tas tchí-am tchi!)</em>
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- ABA 3: MENSAGENS PARA WHATSAPP -->
-    <div class="view-panel">
-      <div class="card">
-        <h2>📱 Blocos Prontos para Copiar e Colar no WhatsApp do Grupo</h2>
-        <h3>Bloco do Encontro 1 (Confraternização):</h3>
-        <div class="copy-box" id="w1">💚 *GRUPO BONA VOLO — ENCONTRO 1 DO MÊS (CONFRATERNIZAÇÃO!)*
-👋 *Saluton!* (Sa-LÚ-ton) = Olá!
-🕊️ *Paco kaj Bona Volo!* = Paz e Boa Vontade!
+    <!-- ========================================================= -->
+    <!-- WORKSPACE MÊS 2 (LIÇÃO 2 — ENCONTROS 5 A 8)               -->
+    <!-- ========================================================= -->
+    <div class="month-workspace" id="workspace-m2">
+      <!-- ABA 0: PROJETOR MÊS 2 -->
+      <div class="view-panel active">
+        <div class="sub-tabs">
+          <button class="sub-btn active" onclick="switchSub(2, 0)">🌟 Encontro 5<br><small>Confraternização</small></button>
+          <button class="sub-btn" onclick="switchSub(2, 1)">🔍 Encontro 6<br><small>Lição 2 (Parte A)</small></button>
+          <button class="sub-btn" onclick="switchSub(2, 2)">💬 Encontro 7<br><small>Lição 2 (Parte B)</small></button>
+          <button class="sub-btn" onclick="switchSub(2, 3)">🏆 Encontro 8<br><small>Missão Ekzercaro 2</small></button>
+        </div>
 
-✨ *8 Palavras que você já sabe em Esperanto:*
-1. *familio* = família | 2. *amiko* = amigo | 3. *naturo* = natureza | 4. *oceano* = oceano | 5. *kontinento* = continente | 6. *kafo* = café | 7. *granda* = grande | 8. *bela* = belo(a)
+        <!-- M2 SUB 0: ENCONTRO 5 -->
+        <div class="sub-view active">
+          <div class="card">
+            <h2>🌈 Encontro 5 (1º do Mês 2) — Confraternização: "As Cores da Nossa Amizade"</h2>
+            <h3>✨ Degustação Leve (10 min): Clique para descobrir as Cores em Esperanto!</h3>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">VERDA</div><div class="pron">VÉR-da</div><div class="pt">💚 Verde (Esperança)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BLUA</div><div class="pron">BLÚ-a</div><div class="pt">💙 Azul (Céu / Mar)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">FLAVA</div><div class="pron">FLÁ-va</div><div class="pt">💛 Amarelo (Sol / Banana)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">RUĜA</div><div class="pron">RÚ-dja</div><div class="pt">❤️ Vermelho (Coração / Tomate)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BLANKA</div><div class="pron">BLÂN-ka</div><div class="pt">🤍 Branco (Paz)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BRUNA</div><div class="pron">BRÚ-na</div><div class="pt">🤎 Marrom (Chocolate / Café)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">NIGRA</div><div class="pron">NÍ-gra</div><div class="pt">🖤 Preto (Gata Mimi)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">STELO</div><div class="pron">STÉ-lo</div><div class="pt">⭐ Estrela (Verda Stelo!)</div></div>
+            </div>
+            <div class="note-banner">✏️ Na frente da folha: Desenhe uma Estrela Verde (<em>Verda Stelo</em>) e escreva suas 3 cores favoritas em Esperanto!</div>
+          </div>
 
-📝 *Na sua folha de papel:*
-• Frente: Escolha 3 palavras acima e faça um desenho ao lado!
-• Verso (*Ilha da Boa Vontade*): Desenhe uma ilha com 1 lugar feliz, 1 comida de família, 1 alegria e 1 desejo bom para o nosso grupo!</div>
-        <button class="copy-btn" onclick="copyText('w1', this)">📋 Copiar Mensagem do Encontro 1</button>
+          <div class="card" style="background:var(--gold-light); border-color:#f59e0b;">
+            <h2>💛 Grande Dinâmica de Confraternização (28 min): "O Arco-Íris do Nosso Coração"</h2>
+            <p style="font-size:1.1rem; margin-bottom:10px;">No <strong>verso da folha</strong>, usando lápis de cor ou canetas, crie 4 círculos coloridos e compartilhe na roda (com Nilda, Miguel, Maria, Mariza, Raíza e Rafael):</p>
+            <ul style="margin-left:20px; font-size:1.08rem; line-height:1.8;">
+              <li>💚 <strong>VERDA (Verde — Esperança):</strong> Um sonho ou esperança bonita que trago no coração.</li>
+              <li>💛 <strong>FLAVA (Amarelo — Alegria):</strong> Algo que me fez sorrir nesta semana.</li>
+              <li>💙 <strong>BLUA (Azul — Paz):</strong> Um momento ou lugar que me traz muita paz interior.</li>
+              <li>❤️ <strong>RUĜA (Vermelho — Amor):</strong> Uma pessoa ou bichinho de estimação que eu amo muito!</li>
+            </ul>
+          </div>
+        </div>
 
-        <h3 style="margin-top:20px;">Bloco de Divulgação Geral (AEOF + EAD da FEB):</h3>
-        <div class="copy-box" id="w2">🌍💚 *SALUTON! (OLÁ!)*
-A nossa *Associação Espírita Obreiros da Fraternidade (AEOF)*, em Cruz das Almas, abriga o *primeiro Departamento de Esperanto e Espiritismo (DEE) da Bahia*!
+        <!-- M2 SUB 1: ENCONTRO 6 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>🔍 Encontro 6 — A Família Hansen, os Mascotes e os Pronomes (Li, Ŝi, Ĝi, Ili)</h2>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">VIRO • VIRINO</div><div class="pron">ví-ro • vi-RÍ-no</div><div class="pt">👨 Homem • 👩 Mulher</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KNABO • KNABINO</div><div class="pron">kná-bo • kna-BÍ-no</div><div class="pt">👦 Menino • 👧 Menina</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">HUNDO (Pluto)</div><div class="pron">RÚN-do (H aspirado)</div><div class="pt">🐶 Cachorro</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KATO (Mimi)</div><div class="pron">KÁ-to</div><div class="pt">🐱 Gato(a)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BESTO • HOMO</div><div class="pron">BÉS-to • RÔ-mo</div><div class="pt">🐾 Animal • 🧑‍🤝‍🧑 Ser humano</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">LI • ŜI • ĜI • ILI</div><div class="pron">li • xi • dji • í-li</div><div class="pt">Ele • Ela • Ele/Ela (coisa/animal) • Eles</div></div>
+            </div>
+            <h3>📝 Escreva no caderno de 1 a 6 (Quem é quem na Família Hansen?):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Karlo ne estas knabino, sed ___________.</span><button class="reveal-btn" onclick="showAns(this,'knabo')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> Vera kaj Lisa estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'knabinoj')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> S-ro Hansen estas viro, kaj S-ino Hansen estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'virino')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Pluto estas hundo, kaj Mimi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'kato')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> Pluto kaj Mimi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'bestoj')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>6.</strong> Kio estas Karlo? _____ estas knabo. Kio estas Vera? _____ estas knabino.</span><button class="reveal-btn" onclick="showAns(this,'Li / Ŝi')">Ver Resposta</button></div>
+          </div>
+        </div>
 
-🌟 *Como participar?*
-1️⃣ *Presencial (Grupo Bona Volo)*: Sábados, às *16h40*, na Sala da Evangelização da AEOF. Amizade, confraternização e aprendizado leve para crianças, jovens e adultos!
-2️⃣ *Online (EAD da FEB)*: Não pode vir às 16h40? Estude gratuitamente pelas turmas online da *Federação Espírita Brasileira (FEB)* e participe dos nossos eventos fraternos! Fale com *Rafael*.</div>
-        <button class="copy-btn" onclick="copyText('w2', this)">📋 Copiar Convite de Divulgação</button>
+        <!-- M2 SUB 2: ENCONTRO 7 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>💬 Encontro 7 — Frutas, Perguntas com "ĈU" (Jes/Ne) e o Detetive "KIA?"</h2>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">BANANO • CITRONO</div><div class="pron">ba-NÂ-no • tsi-TRÔ-no</div><div class="pt">🍌 Banana • 🍋 Limão</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">TOMATO • FRUKTO</div><div class="pron">to-MÁ-to • FRÚK-to</div><div class="pt">🍅 Tomate • 🍎 Fruta</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">ĈOKOLADO</div><div class="pron">tcho-ko-LÁ-do</div><div class="pt">🍫 Chocolate</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">ELEFANTO (Griza)</div><div class="pron">e-le-FÂN-to (GRÍ-za)</div><div class="pt">🐘 Elefante (Cinza)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">ĈU...? (JES / NE)</div><div class="pron">tchu (iés / nê)</div><div class="pt">❓ Faz pergunta Sim/Não!</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIA ESTAS...?</div><div class="pron">KÍ-a ÉS-tas</div><div class="pt">🎨 Como é? / Qual a cor?</div></div>
+            </div>
+            <h3>📝 Desafio no Caderno (Responda de 1 a 6 usando Jes, Ne ou a cor!):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Ĉu Pluto estas hundo? — _____, ĝi estas hundo.</span><button class="reveal-btn" onclick="showAns(this,'Jes')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> Ĉu Lisa estas knabo? — _____, ŝi ne estas knabo, sed knabino.</span><button class="reveal-btn" onclick="showAns(this,'Ne')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> Kia estas la tomato? — Ĝi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'ruĝa')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Kia estas la banano? — Ĝi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'flava')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> Kia estas la Esperanto-stelo? — Ĝi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'verda')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>6.</strong> Kia estas la ĉokolado? — Ĝi estas ___________.</span><button class="reveal-btn" onclick="showAns(this,'bruna')">Ver Resposta</button></div>
+          </div>
+        </div>
+
+        <!-- M2 SUB 3: ENCONTRO 8 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>🏆 Encontro 8 — Missão Cooperativa: Ekzercaro 2</h2>
+            <h3>Parte A — Complete com KIO (o que), KIU (quem) ou KIA (como é/qual cor):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> ________ estas Lisa? — Ŝi estas la malgranda knabino.</span><button class="reveal-btn" onclick="showAns(this,'Kiu')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> ________ estas la knabo? — Li estas Karlo.</span><button class="reveal-btn" onclick="showAns(this,'Kiu')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> ________ estas Pluto? — Ĝi estas hundo.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> ________ estas tomato? — Ĝi estas frukto.</span><button class="reveal-btn" onclick="showAns(this,'Kio')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> ________ estas Pluto? — Ĝi estas blanka.</span><button class="reveal-btn" onclick="showAns(this,'Kia')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>6.</strong> ________ estas Mimi? — Ĝi estas nigra.</span><button class="reveal-btn" onclick="showAns(this,'Kia')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>7.</strong> ________ estas la elefanto? — Ĝi estas griza.</span><button class="reveal-btn" onclick="showAns(this,'Kia')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>8.</strong> ________ estas la maro? — Ĝi estas blua.</span><button class="reveal-btn" onclick="showAns(this,'Kia')">Ver Resposta</button></div>
+
+            <h3 style="margin-top:18px;">Parte B — Complete com LI, ŜI, ĜI ou ILI:</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Kio estas Karlo? _____ estas knabo.</span><button class="reveal-btn" onclick="showAns(this,'Li')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> Kio estas Vera? _____ estas knabino.</span><button class="reveal-btn" onclick="showAns(this,'Ŝi')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> Kia estas la Esperanto-stelo? _____ estas verda.</span><button class="reveal-btn" onclick="showAns(this,'Ĝi')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Kio estas Pluto kaj Mimi? _____ estas bestoj.</span><button class="reveal-btn" onclick="showAns(this,'Ili')">Ver Resposta</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 1: ROTEIRO DO FACILITADOR MÊS 2 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>📋 Roteiros de 60 Minutos — Mês 2 (Encontros 05 a 08 — Lição 2)</h2>
+          <h3>🌟 Encontro 05 (1º Encontro do Mês 2 — Confraternização das Cores):</h3>
+          <div class="timeline-step"><strong>16h40–16h45 (5m) | Oração/Acolhimento:</strong> Boas-vindas ao Mês 2 e prece inicial.</div>
+          <div class="timeline-step"><strong>16h45–16h55 (10m) | Aquecimento ("Toque na Cor!"):</strong> Rafael ou Raíza dizem uma cor em Esperanto (<em>verda, blua, flava, ruĝa, blanka</em>) e Miguel, Maria e os adultos tocam em algum objeto/roupa daquela cor na sala!</div>
+          <div class="timeline-step"><strong>16h55–17h05 (10m) | Degustação Leve:</strong> Adivinhar os 8 cartões de cores na tela e pintar/escrever 3 cores na frente da folha.</div>
+          <div class="timeline-step fraternal"><strong>17h05–17h33 (28m) | Grande Confraternização ("O Arco-Íris do Nosso Coração"):</strong> Reflexão sobre <em>Doutor Esperanto</em> (como Zamenhof via beleza na diversidade humana). No verso da folha, cada integrante (incluindo Nilda) associa 4 cores a 4 sentimentos/pessoas queridas e compartilha em roda!</div>
+
+          <h3 style="margin-top:18px;">🔍 Encontro 06 (Lição 2 — Parte A: Família Hansen e Mascotes):</h3>
+          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Mímica rápida de animais e personagens (<em>hundo, kato, elefanto, knabo, knabino</em>).</div>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Apresentar a Família Hansen na tela, pronomes <em>li, ŝi, ĝi, ili</em> e responder de 1 a 6 no caderno.</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Roda afetiva sobre nossos bichinhos de estimação (<em>hundoj kaj katoj</em>) e o amor aos animais na visão espírita.</div>
+
+          <h3 style="margin-top:18px;">💬 Encontro 07 (Lição 2 — Parte B: Frutas, "Ĉu" e "Kia"):</h3>
+          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Jogo do "Verdadeiro ou Absurdo" com Miguel e Maria: <em>"Ĉu la banano estas blua?" — "Ne, ĝi estas flava!"</em>.</div>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Perguntas com <em>Ĉu</em> e <em>Kia</em> + exercício de 1 a 6 no caderno.</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Partilha de uma fruta ou pedacinho de chocolate (<em>frukto kaj ĉokolado</em>) agradecendo pelas dádivas da natureza.</div>
+
+          <h3 style="margin-top:18px;">🏆 Encontro 08 (Missão Ekzercaro 2):</h3>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Quiz cooperativo do <em>Ekzercaro 2</em> (Partes A e B na tela + caderno).</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> <em>"Cartão Colorido de Gratidão"</em> — criar à mão um cartão com a cor favorita de um amigo do grupo!</div>
+        </div>
+      </div>
+
+      <!-- ABA 2: WHATSAPP MÊS 2 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>📱 Blocos de WhatsApp — Mês 2 (Lição 2)</h2>
+          <div class="copy-box" id="m2-w1">🌈 *GRUPO BONA VOLO — MÊS 2 (LIÇÃO 2: CORES, FAMÍLIA HANSEN E ANIMAIS)*
+🎨 *Cores:* *verda* (verde), *blua* (azul), *flava* (amarelo), *ruĝa* (vermelho), *blanka* (branco), *bruna* (marrom), *nigra* (preto), *griza* (cinza)
+👨‍👩‍👧‍👦 *Pessoas e Animais:* *viro* (homem), *virino* (mulher), *knabo* (menino), *knabino* (menina), *hundo* (cão), *kato* (gato), *besto* (animal)
+🔑 *Pronomes:* *li* (ele), *ŝi* (ela), *ĝi* (ele/ela neutro), *ili* (eles/elas)
+❓ *Perguntas:* *Ĉu...?* (Sim/Não: *Jes / Ne, sed...*) | *Kia estas?* (Como é / Qual a cor?)
+📺 *Vídeo do Mês:* Aula 2 do Prof. Cícero Gabriel no YouTube!</div>
+          <button class="copy-btn" onclick="copyText('m2-w1', this)">📋 Copiar Resumo do Mês 2</button>
+        </div>
+      </div>
+
+      <!-- ABA 3: CANCIONEIRO MÊS 2 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>🎵 Cancioneiro & Acervo PDF</h2>
+          <p style="font-size:1.15rem; background:var(--green-light); padding:14px; border-radius:10px;">
+            <strong>Jogo Cantado das Cores (Melodia: "Frère Jacques / Meu Lanchinho"):</strong><br>
+            Blua ĉielo, blua ĉielo, / Verda stel', verda stel'! / Flava estas suno, ruĝa estas koro, / Bela mond', bela mond'!
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- ABA 4: CANCIONEIRO E MURAL -->
-    <div class="view-panel">
-      <div class="card">
-        <h2>🎵 Cancioneiro Inicial (Para Cantar com as Crianças e Adultos)</h2>
-        <h3>1. Canção de Acolhimento (Melodia: "Brilha, brilha, estrelinha" ou "Cai, cai, balão")</h3>
-        <p style="font-size:1.15rem; background:var(--green-light); padding:14px; border-radius:10px;">
-          <strong>Bonan tagon, mia amiko, / Kiel fartas vi?</strong> <em>(Bô-nan tá-gon, mí-a a-mí-ko / Kí-el fár-tas vi?)</em><br>
-          <strong>Paco, ĝojo, bona volo / Estas ĉiam ĉi!</strong> <em>(Pá-tso, djô-io, bô-na vô-lo / És-tas tchí-am tchi!)</em><br>
-          <small>Tradução: Bom dia/tarde, meu amigo, como passa você? Paz, alegria, boa vontade estão sempre aqui!</small>
-        </p>
-        <h3>2. Parabéns em Esperanto (Feliĉan Naskiĝtagon)</h3>
-        <p style="font-size:1.15rem; background:var(--gold-light); padding:14px; border-radius:10px;">
-          <strong>Feliĉan naskiĝtagon al vi, / Feliĉan naskiĝtagon, kara amiko, / Feliĉan naskiĝtagon al vi!</strong><br>
-          <em>(Pronúncia: Fe-lí-tchan nas-kídj-ta-gon al vi!)</em>
-        </p>
+    <!-- ========================================================= -->
+    <!-- WORKSPACE MÊS 3 (LIÇÃO 3 — ENCONTROS 9 A 12)              -->
+    <!-- ========================================================= -->
+    <div class="month-workspace" id="workspace-m3">
+      <!-- ABA 0: PROJETOR MÊS 3 -->
+      <div class="view-panel active">
+        <div class="sub-tabs">
+          <button class="sub-btn active" onclick="switchSub(3, 0)">🌟 Encontro 9<br><small>Confraternização</small></button>
+          <button class="sub-btn" onclick="switchSub(3, 1)">🔍 Encontro 10<br><small>Lição 3 (Parte A)</small></button>
+          <button class="sub-btn" onclick="switchSub(3, 2)">💬 Encontro 11<br><small>Lição 3 (Parte B)</small></button>
+          <button class="sub-btn" onclick="switchSub(3, 3)">🏆 Encontro 12<br><small>Missão Ekzercaro 3</small></button>
+        </div>
+
+        <!-- M3 SUB 0: ENCONTRO 9 -->
+        <div class="sub-view active">
+          <div class="card">
+            <h2>👨‍👩‍👧‍👦 Encontro 9 (1º do Mês 3) — Confraternização: "Nossa Família do Coração"</h2>
+            <h3>✨ Degustação Leve (10 min): Clique para descobrir os Laços de Família!</h3>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">PATRO</div><div class="pron">PÁ-tro</div><div class="pt">👨 Pai</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">PATRINO</div><div class="pron">pa-TRÍ-no</div><div class="pt">👩 Mãe (Homenagem à Nilda!)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">FRATO</div><div class="pron">FRÁ-to</div><div class="pt">👦 Irmão (Miguel!)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">FRATINO</div><div class="pron">fra-TÍ-no</div><div class="pt">👧 Irmã (Maria!)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">FILO</div><div class="pron">FÍ-lo</div><div class="pt">👦 Filho</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">FILINO</div><div class="pron">fi-LÍ-no</div><div class="pt">👧 Filha</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">INFANOJ</div><div class="pron">in-FÂ-noi</div><div class="pt">🧒 Crianças</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GEFRATOJ</div><div class="pron">gue-FRÁ-toi</div><div class="pt">👫 Irmãos e Irmãs</div></div>
+            </div>
+            <div class="note-banner">✏️ Na frente da folha: Miguel e Maria escrevem uma frase especial para Nilda: <code>Nilda estas nia bela patrino!</code></div>
+          </div>
+
+          <div class="card" style="background:var(--gold-light); border-color:#f59e0b;">
+            <h2>💛 Grande Dinâmica de Confraternização (28 min): "A Árvore da Família e da Gratidão"</h2>
+            <p style="font-size:1.1rem; margin-bottom:10px;">Inspirada em <em>O Evangelho Segundo o Espiritismo</em> (Cap. XIV — <em>Honrai a vosso pai e a vossa mãe</em>):</p>
+            <ul style="margin-left:20px; font-size:1.08rem; line-height:1.8;">
+              <li>🌳 <strong>1. Desenho da Árvore:</strong> No verso da folha, cada um desenha uma árvore frondosa.</li>
+              <li>🍎 <strong>2. Os Frutos do Afeto:</strong> Nas raízes e nos frutos, escreve o nome das pessoas da família (e amigos espirituais) que sustentam sua caminhada.</li>
+              <li>💐 <strong>3. Homenagem Viva:</strong> Momento especial de carinho e gratidão à <strong>Nilda</strong>, à <strong>Raíza</strong>, à <strong>Mariza</strong>, ao <strong>Miguel</strong>, à <strong>Maria</strong> e ao <strong>Rafael</strong> por formarem a família <em>Bona Volo</em>!</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- M3 SUB 1: ENCONTRO 10 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>🧬 Encontro 10 — A "Genética das Palavras": Sufixo "-IN-" e Prefixo "GE-"</h2>
+            <p style="margin-bottom:10px;">Veja como o Esperanto combina blocos lógicos como o DNA:</p>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">-IN- (Feminino)</div><div class="pron">patro &rarr; patrino</div><div class="pt">Transforma em feminino!</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GE- (Ambos os sexos)</div><div class="pron">patro &rarr; gepatroj</div><div class="pt">Pai + Mãe (Pais)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GEKNABOJ</div><div class="pron">gue-KNÁ-boi</div><div class="pt">👦👧 Meninos e meninas</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GEFILOJ</div><div class="pron">gue-FÍ-loi</div><div class="pt">👨‍👩‍👧‍👦 Filhos e filhas</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GEFRATOJ</div><div class="pron">gue-FRÁ-toi</div><div class="pt">👫 Irmãos e irmãs</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">GESINJOROJ</div><div class="pron">gue-si-NHÔ-roi</div><div class="pt">👫 Senhor e Senhora (Casal)</div></div>
+            </div>
+            <h3>📝 Desafio no Caderno (Desvende a "fórmula genética" de cada palavra!):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Kio estas gepatroj? — _______________________.</span><button class="reveal-btn" onclick="showAns(this,'Patro kaj patrino')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> Kio estas geknaboj? — _______________________.</span><button class="reveal-btn" onclick="showAns(this,'Knabo kaj knabino')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> Kio estas gefiloj? — _______________________.</span><button class="reveal-btn" onclick="showAns(this,'Filo kaj filino')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Kio estas gefratoj? — _______________________.</span><button class="reveal-btn" onclick="showAns(this,'Frato kaj fratino')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> Miguel estas la _________ de Maria, kaj Maria estas la _________ de Miguel.</span><button class="reveal-btn" onclick="showAns(this,'frato / fratino')">Ver Resposta</button></div>
+          </div>
+        </div>
+
+        <!-- M3 SUB 2: ENCONTRO 11 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>💬 Encontro 11 — Verbo "HAVAS" (Tem), Detetive "KIES?" (De quem?) e o Acusativo (-N)</h2>
+            <div class="word-grid">
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">HAVAS</div><div class="pron">RÁ-vas (H aspirado)</div><div class="pt">🤲 Tem / Possui</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">KIES...?</div><div class="pron">KÍ-es</div><div class="pt">🔑 DE QUEM? (Posse)</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">-N (Acusativo)</div><div class="pron">hundon, katon</div><div class="pt">🎯 Marca o que a gente TEM!</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">PUPO • SIDAS</div><div class="pron">PÚ-po • SÍ-das</div><div class="pt">🪆 Boneca • 🪑 Senta</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">JAM • ANKORAŬ</div><div class="pron">iam • an-KÔ-rau</div><div class="pt">⏱️ Já • Ainda</div></div>
+              <div class="flip-card" onclick="this.classList.toggle('revealed')"><div class="eo">MATURA</div><div class="pron">ma-TÚ-ra</div><div class="pt">🍅 Maduro(a)</div></div>
+            </div>
+            <h3>📝 Desafio no Caderno (Coloque KIES, KIU ou a medalhinha -N!):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> _______ hundo estas Pluto? — Ĝi estas la hundo de Karlo.</span><button class="reveal-btn" onclick="showAns(this,'Kies')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> _______ kato estas Mimi? — Ĝi estas la kato de Vera.</span><button class="reveal-btn" onclick="showAns(this,'Kies')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> _______ estas la patro de Karlo? — Adam Hansen estas la patro.</span><button class="reveal-btn" onclick="showAns(this,'Kiu')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> Karlo havas besto___. Li ne havas kato___, sed hundo___.</span><button class="reveal-btn" onclick="showAns(this,'beston / katon / hundon')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> Ĉu Vera havas fratino___? — Jes, ŝi havas fratinon (Lisa).</span><button class="reveal-btn" onclick="showAns(this,'fratinon')">Ver Resposta</button></div>
+          </div>
+        </div>
+
+        <!-- M3 SUB 3: ENCONTRO 12 -->
+        <div class="sub-view">
+          <div class="card">
+            <h2>🏆 Encontro 12 — Missão Cooperativa: Ekzercaro 3 & Festa do 1º Trimestre!</h2>
+            <h3>Parte A — Pri la Teksto (Escreva no caderno de 1 a 5):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> Mimi estas __________. La nomo de la kato estas Mimi.</span><button class="reveal-btn" onclick="showAns(this,'kato')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> La nomo de la __________ estas Pluto.</span><button class="reveal-btn" onclick="showAns(this,'hundo')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> Karlo estas la __________ de Vera. Vera estas la __________ de Karlo.</span><button class="reveal-btn" onclick="showAns(this,'frato / fratino')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> S-ino Hansen estas la __________ de la infanoj.</span><button class="reveal-btn" onclick="showAns(this,'patrino')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>5.</strong> Lisa estas la __________ de ges-roj Hansen.</span><button class="reveal-btn" onclick="showAns(this,'filino')">Ver Resposta</button></div>
+
+            <h3 style="margin-top:18px;">Parte B — KIU (Quem/Qual) ou KIES (De quem):</h3>
+            <div class="quiz-item"><span><strong>1.</strong> _____ estas la frato de Vera? — Karlo estas la frato de Vera.</span><button class="reveal-btn" onclick="showAns(this,'Kiu')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>2.</strong> _____ estas la nomo de la flava frukto? — Banano.</span><button class="reveal-btn" onclick="showAns(this,'Kiu')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>3.</strong> _____ filo estas Karlo? — Li estas la filo de ges-roj Hansen.</span><button class="reveal-btn" onclick="showAns(this,'Kies')">Ver Resposta</button></div>
+            <div class="quiz-item"><span><strong>4.</strong> _____ fratino estas Vera? — Ŝi estas la fratino de Lisa.</span><button class="reveal-btn" onclick="showAns(this,'Kies')">Ver Resposta</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 1: ROTEIRO DO FACILITADOR MÊS 3 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>📋 Roteiros de 60 Minutos — Mês 3 (Encontros 09 a 12 — Lição 3)</h2>
+          <h3>🌟 Encontro 09 (1º Encontro do Mês 3 — Confraternização da Família):</h3>
+          <div class="timeline-step"><strong>Aquecimento (10m):</strong> Roda de afeto apresentando os laços presentes na própria sala: Rafael kaj Raíza, Nilda, Miguel kaj Maria (<em>gefratoj</em>), Mariza!</div>
+          <div class="timeline-step"><strong>Degustação Leve (10m):</strong> Os 8 cartões da Família na tela + homenagem escrita à Nilda (<em>"Nilda estas nia bela patrino!"</em>).</div>
+          <div class="timeline-step fraternal"><strong>Grande Confraternização (28m):</strong> Reflexão sobre o Cap. XIV de <em>O Evangelho Segundo o Espiritismo</em> + Desenho da <em>Árvore da Família e da Gratidão</em> no verso da folha.</div>
+
+          <h3 style="margin-top:18px;">🔍 Encontro 10 (Lição 3 — Parte A: Genética das Palavras `-in-` e `ge-`):</h3>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Como o Esperanto forma femininos (<em>-in-</em>) e grupos mistos (<em>ge-</em>). Resolução das 5 fórmulas no caderno com apoio da Profª Mariza e das crianças!</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Dinâmica sobre a igualdade e complementaridade entre homens, mulheres, crianças e idosos na criação divina (<em>O Livro dos Espíritos</em>, Q. 817–822).</div>
+
+          <h3 style="margin-top:18px;">💬 Encontro 11 (Lição 3 — Parte B: `Havas`, `Kies` e o Acusativo `-n`):</h3>
+          <div class="timeline-step"><strong>Aquecimento (8m):</strong> Jogo da "Sacola Misteriosa" — tirar um objeto/desenho e dizer: <em>"Mi havas krajonon / libron / pomon!"</em>.</div>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Entender <em>Kies</em> (de quem) e a medalhinha <em>-n</em> após o verbo <em>havas</em>.</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Reflexão sobre "Ter vs. Ser": o que nós realmente possuímos na alma que levamos para a eternidade (<em>O Evangelho Segundo o Espiritismo</em>, Cap. XVI).</div>
+
+          <h3 style="margin-top:18px;">🏆 Encontro 12 (Missão Ekzercaro 3 & Festa do 1º Trimestre!):</h3>
+          <div class="timeline-step"><strong>Atividade Principal (20m):</strong> Resolução cooperativa do <em>Ekzercaro 3</em>.</div>
+          <div class="timeline-step fraternal"><strong>Fraternidade (18m):</strong> Celebração das 3 primeiras lições concluídas (12 encontros de vitória!) e combinação do nosso <em>1º Piquenique na Natureza (Pikniko de Bona Volo)</em>!</div>
+        </div>
+      </div>
+
+      <!-- ABA 2: WHATSAPP MÊS 3 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>📱 Blocos de WhatsApp — Mês 3 (Lição 3)</h2>
+          <div class="copy-box" id="m3-w1">👨‍👩‍👧‍👦 *GRUPO BONA VOLO — MÊS 3 (LIÇÃO 3: FAMÍLIA, POSSE E ACUSATIVO)*
+💛 *Família:* *patro* (pai), *patrino* (mãe), *frato* (irmão), *fratino* (irmã), *filo* (filho), *filino* (filha), *infanoj* (crianças)
+🧬 *Prefixo GE- (União):* *gepatroj* (pais), *gefratoj* (irmãos), *geknaboj* (meninos e meninas), *gefiloj* (filhos e filhas)
+🔑 *Novas Chaves:* *havas* (tem), *Kies?* (De quem?), e a terminação *-N* para o que possuímos (*Karlo havas hundon!*)
+📺 *Vídeo do Mês:* Aula 3 do Prof. Cícero Gabriel no YouTube!</div>
+          <button class="copy-btn" onclick="copyText('m3-w1', this)">📋 Copiar Resumo do Mês 3</button>
+        </div>
+      </div>
+
+      <!-- ABA 3: CANCIONEIRO MÊS 3 -->
+      <div class="view-panel">
+        <div class="card">
+          <h2>🎵 Cancioneiro & Estrofe da Grande Família</h2>
+          <p style="font-size:1.15rem; background:var(--gold-light); padding:14px; border-radius:10px;">
+            <strong>La Espero (Zamenhof) — Nossa Grande Roda Familiar:</strong><br>
+            "Sur neŭtrala lingva fundamento, / Komprenante unu la alian, / La popoloj faros en konsento / <strong>Unu grandan rondon familian!</strong>"
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    function switchMain(idx) {
-      document.querySelectorAll('.nav-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-      document.querySelectorAll('.view-panel').forEach((p, i) => p.classList.toggle('active', i === idx));
+    let currentMonth = 0; // 0 = Home, 1 = M1, 2 = M2, 3 = M3
+
+    function goHome() {
+      currentMonth = 0;
+      document.getElementById('home-screen').classList.add('active');
+      document.getElementById('month-main-nav').classList.remove('visible');
+      [1, 2, 3].forEach(m => {
+        document.getElementById('workspace-m' + m).classList.remove('active');
+        document.getElementById('pill-m' + m).className = 'month-pill';
+      });
+      document.getElementById('pill-home').className = 'month-pill active-home';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    function switchSub(idx) {
-      document.querySelectorAll('.sub-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-      document.querySelectorAll('.sub-view').forEach((v, i) => v.classList.toggle('active', i === idx));
+
+    function selectMonth(monthNum, meetingIndex) {
+      currentMonth = monthNum;
+      document.getElementById('home-screen').classList.remove('active');
+      document.getElementById('month-main-nav').classList.add('visible');
+
+      document.getElementById('pill-home').className = 'month-pill';
+      [1, 2, 3].forEach(m => {
+        const ws = document.getElementById('workspace-m' + m);
+        const pill = document.getElementById('pill-m' + m);
+        if (m === monthNum) {
+          ws.classList.add('active');
+          pill.className = 'month-pill active-m' + m;
+        } else {
+          ws.classList.remove('active');
+          pill.className = 'month-pill';
+        }
+      });
+
+      document.getElementById('nav-tab-0').textContent = '🖥️ 1. Painel do Projetor (Mês ' + monthNum + ')';
+      switchMainTab(0);
+      if (typeof meetingIndex === 'number') {
+        switchSub(monthNum, meetingIndex);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    function switchMainTab(tabIdx) {
+      if (currentMonth === 0) return;
+      const ws = document.getElementById('workspace-m' + currentMonth);
+      const panels = ws.querySelectorAll('.view-panel');
+      const navBtns = document.querySelectorAll('#month-main-nav .nav-btn');
+      navBtns.forEach((b, i) => b.classList.toggle('active', i === tabIdx));
+      panels.forEach((p, i) => p.classList.toggle('active', i === tabIdx));
+    }
+
+    function switchSub(monthNum, subIdx) {
+      const ws = document.getElementById('workspace-m' + monthNum);
+      const btns = ws.querySelectorAll('.sub-tabs .sub-btn');
+      const views = ws.querySelectorAll('.sub-view');
+      btns.forEach((b, i) => b.classList.toggle('active', i === subIdx));
+      views.forEach((v, i) => v.classList.toggle('active', i === subIdx));
+    }
+
     function showAns(btn, ans) {
       if (btn.classList.contains('shown')) {
         btn.textContent = 'Ver Resposta';
@@ -413,6 +1016,7 @@ A nossa *Associação Espírita Obreiros da Fraternidade (AEOF)*, em Cruz das Al
         btn.classList.add('shown');
       }
     }
+
     function copyText(id, btn) {
       const txt = document.getElementById(id).innerText;
       navigator.clipboard.writeText(txt);
